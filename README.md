@@ -2,9 +2,9 @@
 
 Ansible Role :rainbow: :bar_chart: Grafana
 =========
-[![Galaxy Role](*role-shield-link*)](--role-link--)
-[![Downloads](*downloads-shield-link*)](--role-link--)
-[![Build Status](*build-shield-link*)](--role-link--)
+[![Galaxy Role](https://img.shields.io/ansible/role/45498.svg)](https://galaxy.ansible.com/0x0I/grafana)
+[![Downloads](https://img.shields.io/ansible/role/d/45498.svg)](https://galaxy.ansible.com/0x0I/grafana)
+[![Build Status](https://travis-ci.org/0x0I/ansible-role-grafana.svg?branch=master)](https://travis-ci.org/0x0I/ansible-role-grafana)
 
 **Table of Contents**
   - [Supported Platforms](#supported-platforms)
