@@ -1,0 +1,29 @@
+---
+# role metadata file
+galaxy_info:
+  author: Ahmad Wilson
+  role_name: grafana
+  description: Grafana - an analytics and monitoring observability platform
+  company: "O1.io"
+  license: license (Apache, BSD, MIT)
+  min_ansible_version: 2.6
+  platforms:
+    - name: EL
+      versions:
+        - all
+    - name: Debian
+      versions:
+        - all
+    - name: Fedora
+      versions:
+        - all
+    - name: Ubuntu
+      versions:
+        - all
+
+  galaxy_tags:
+    - grafana
+    - dashboards
+    - monitoring
+    - alerting
+    - prometheus
