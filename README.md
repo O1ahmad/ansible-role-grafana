@@ -1,6 +1,6 @@
-<p><img src="https://icon2.cleanpng.com/20181116/rfs/kisspng-grafana-scalable-vector-graphics-application-softw-5bef3c66805155.6395683215424052225256.jpg" alt="grafana logo" title="grafana" align="right" height="60" /></p>
+<p><img src="https://wiki.lafabriquedesmobilites.fr/images/fabmob/7/7d/Grafana_logo_swirl.png" alt="grafana logo" title="grafana" align="right" height="100" /></p>
 
-Ansible Role :bar_chart: :rainbow: Grafana
+Ansible Role :rainbow: :bar_chart: Grafana
 =========
 [![Galaxy Role](*role-shield-link*)](--role-link--)
 [![Downloads](*downloads-shield-link*)](--role-link--)
