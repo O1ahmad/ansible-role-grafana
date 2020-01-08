@@ -3,3 +3,5 @@
   hosts: test-kitchen
   roles:
     - ansible-role-grafana
+  vars:
+    install_type: archive

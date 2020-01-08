@@ -1,0 +1,20 @@
+---
+- name: Ensure Grafana system group exists
+  become: true
+  group:
+    name: "{{ grafana_user }}"
+    state: present
+    system: true
+
+- name: Create Grafana system user
+  become: true
+  user:
+    comment: Grafana service account
+    name: "{{ grafana_user }}"
+    group: "{{ grafana_user }}"
+    shell: "/sbin/nologin"
+    system: true
+    create_home: false
+
+- name: perform designated installation procedure
+  include_tasks: "common/install/{{ install_type }}_install.yml"

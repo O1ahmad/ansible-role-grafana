@@ -1,2 +1,19 @@
 ---
 # defaults variable file
+
+grafana_user: grafana
+
+install_type: archive
+
+archive_url: https://dl.grafana.com/oss/release/grafana-6.5.2.linux-amd64.tar.gz
+archive_checksum: 0a8bc55949aa920682b3bde99e9b1b87eef2c644bde8f8a48fa3ac746920d2ba
+checksum_format: sha256
+
+default_install_dir: /opt/grafana
+default_config_dir: /etc/grafana
+
+grafana_config_file: grafana.ini
+grafana_config: {}
+
+custom_unit_properties: {}
+extra_run_args: []

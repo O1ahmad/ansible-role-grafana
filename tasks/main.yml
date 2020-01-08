@@ -1,2 +1,25 @@
 ---
-# main role installation, configuration and operation tasks
+- name: Include OS and distribution specific variables.
+  include_vars: "{{ item }}"
+  with_first_found:
+    - files:
+        - "{{ ansible_distribution|lower }}.yml"
+        - "{{ ansible_os_family|lower }}.yml"
+      skip: true
+
+- name: Include OS and distribution specific installation tasks.
+  include_tasks: "{{ item }}"
+  with_first_found:
+    - files:
+        - "{{ ansible_distribution|lower }}/install.yml"
+        - "{{ ansible_os_family|lower }}/install.yml"
+      skip: true
+
+- name: Include common installation tasks
+  include_tasks: "common/install.yml"
+
+- name: Include common configuration tasks
+  include_tasks: "common/config.yml"
+
+- name: Include common launch tasks
+  include_tasks: "common/launch.yml"
