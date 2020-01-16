@@ -1,0 +1,42 @@
+---
+#######  Grafana archive installation #######
+
+- name: Determine installation directory
+  set_fact:
+    install_dir: "{{ install_dir | default(default_install_dir) }}"
+  when: install_type == "archive"
+
+- name: Create installation directory
+  file:
+    path: "{{ install_dir }}"
+    state: directory
+    owner: "{{ grafana_user }}"
+    group: "{{ grafana_user }}"
+  become: true
+  when: install_type == "archive"
+
+- name: Download Grafana archive ({{ archive_url }})
+  get_url:
+    url: "{{ archive_url }}"
+    dest: "/tmp/{{ archive_url | urlsplit('path') | basename }}"
+    checksum: "{{ checksum_format }}:{{ archive_checksum }}"
+    owner: "{{ grafana_user }}"
+    group: "{{ grafana_user }}"
+    mode: '0775'
+  register: archive_tmp
+  become: true
+  when: install_type == "archive"
+
+- name: Extract Grafana archive
+  become: true
+  unarchive:
+    src: "{{ archive_tmp.dest }}"
+    dest: "{{ install_dir }}"
+    owner: "{{ grafana_user }}"
+    group: "{{ grafana_user }}"
+    mode: '0775'
+    remote_src: true
+    extra_opts:
+      - --strip-components
+      - '1'
+  when: install_type == "archive"
