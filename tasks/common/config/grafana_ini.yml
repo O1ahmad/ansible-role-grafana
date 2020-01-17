@@ -1,0 +1,20 @@
+---
+- name: Ensure existence of config dir
+  become: true
+  file:
+    path: "{{ config_dir }}"
+    owner: "{{ grafana_user }}"
+    group: "{{ grafana_user }}"
+    state: directory
+
+- name: Copy Grafana configuration in place
+  become: true
+  template:
+    src: "{{ grafana_config_file }}.j2"
+    dest: "{{ config_dir }}/{{ grafana_config_file }}"
+    owner: "{{ grafana_user }}"
+    group: "{{ grafana_user }}"
+    mode: 0644
+  vars:
+    conf: "{{ grafana_config }}"
+  when: grafana_config is defined and grafana_config.keys() | length > 0

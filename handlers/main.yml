@@ -1,2 +1,52 @@
 ---
-# default handlers file
+- name: Restart Grafana service
+  become: true
+  service:
+    name: grafana
+    state: restarted
+  listen: Restart service
+
+- name: Stop Grafana systemd service
+  become: true
+  service:
+    name: grafana
+    state: stopped
+    enabled: false
+  listen: Uninstall service
+
+- name: Remove Grafana systemd service file
+  become: true
+  file:
+    path: "/etc/systemd/system/grafana.service"
+    state: absent
+  listen: Uninstall service
+
+- name: Remove Grafana install dir
+  become: true
+  file:
+    path: "{{ install_dir }}"
+    state: absent
+  listen: Uninstall service
+  when: install_type == "archive"
+
+- name: Remove Grafana config dir
+  become: true
+  file:
+    path: "{{ config_dir }}"
+    state: absent
+  listen: Uninstall service
+
+- name: Remove Grafana user
+  become: true
+  user:
+    name: "{{ grafana_user }}"
+    state: absent
+    remove: true
+  listen: Uninstall service
+
+- name: Remove Grafana group
+  become: true
+  group:
+    name: "{{ grafana_user }}"
+    state: absent
+  listen: Uninstall service

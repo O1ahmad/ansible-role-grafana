@@ -2,19 +2,45 @@
 - name: Ensure existence of config dir
   become: true
   file:
-    path: "{{ config_dir|default(default_config_dir) }}"
+    path: "{{ config_dir }}"
     owner: "{{ grafana_user }}"
     group: "{{ grafana_user }}"
     state: directory
 
-- name: Copy Grafana configuration in place
+- name: Ensure existence of logs dir
   become: true
-  template:
-    src: "{{ grafana_config_file }}.j2"
-    dest: "{{ config_dir|default(default_config_dir) }}/{{ grafana_config_file }}"
+  file:
+    path: "{{ logs_dir }}"
     owner: "{{ grafana_user }}"
     group: "{{ grafana_user }}"
-    mode: 0644
-  vars:
-    conf: "{{ grafana_config }}"
-  when: grafana_config is defined and grafana_config is not none
+    state: directory
+
+- name: Ensure existence of data dir
+  become: true
+  file:
+    path: "{{ data_dir }}"
+    owner: "{{ grafana_user }}"
+    group: "{{ grafana_user }}"
+    state: directory
+
+- name: Ensure existence of provisioning dir
+  become: true
+  file:
+    path: "{{ provisioning_dir }}"
+    owner: "{{ grafana_user }}"
+    group: "{{ grafana_user }}"
+    state: directory
+
+- name: Ensure existence of plugins dir
+  become: true
+  file:
+    path: "{{ plugins_dir }}"
+    owner: "{{ grafana_user }}"
+    group: "{{ grafana_user }}"
+    state: directory
+
+- name: Include provisioned configuration tasks
+  include_tasks: "common/config/{{ item }}.yml"
+  with_items: "{{ provision_configs }}"
+  tags:
+    - config

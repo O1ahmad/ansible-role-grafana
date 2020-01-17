@@ -1,20 +1,10 @@
 ---
-- name: Set unit [Service] configuration
-  set_fact:
-    default_service_unit:
-      ExecStart: "{{ install_dir }}/bin/grafana-server {{ extra_run_args|join(' ') }}"
-      User: "{{ grafana_user }}"
-      Group: "{{ grafana_user }}"
-      WorkingDirectory: "{{ install_dir }}"
-      StandardOutput: journal
-      StandardError: inherit
-
 - name: Setup Grafana systemd unit
   include_role:
     name: 0x0i.systemd
   vars:
     unit_config:
-      - name: grafana
+      - name: "{{ _service_name }}"
         Unit:
           Description: Grafana - analytics and monitoring observability service
           Documentation: https://grafana.com/docs/grafana/latest/
@@ -23,9 +13,10 @@
         Service: "{{ default_service_unit | combine(custom_unit_properties) }}"
         Install:
           WantedBy: multi-user.target
+  when: install_type != "package"
 
 - name: Ensure start of grafana service
   service:
-    name: grafana
+    name: "{{ _service_name }}"
     state: started
     enabled: "yes"

@@ -1,0 +1,23 @@
+---
+- name: Ensure existence of provisioning datasources dir
+  become: true
+  file:
+    path: "{{ provisioning_dir }}/datasources"
+    owner: "{{ grafana_user }}"
+    group: "{{ grafana_user }}"
+    state: directory
+
+- name: Render Grafana datasources configuration
+  become: true
+  template:
+    src: datasources.j2
+    dest: "{{ provisioning_dir }}/datasources/{{ item.name }}.yml"
+    owner: "{{ grafana_user }}"
+    group: "{{ grafana_user }}"
+    mode: 0644
+  vars:
+    version: "{{ item.version | default(1) }}"
+    datasources: "{{ item.datasources | default([]) }}"
+    deleteDatasources: "{{ item.deleteDatasources | default([]) }}"
+  loop: "{{ grafana_datasources }}"
+  when: grafana_datasources is defined and grafana_datasources | length > 0

@@ -1,0 +1,6 @@
+{{ ansible_managed | comment }}
+
+apiVersion: {{ version | default(1) }}
+
+providers:
+{{ providers | to_nice_yaml }}

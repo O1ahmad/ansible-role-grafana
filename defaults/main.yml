@@ -1,6 +1,4 @@
 ---
-# defaults variable file
-
 grafana_user: grafana
 
 install_type: archive
@@ -9,11 +7,32 @@ archive_url: https://dl.grafana.com/oss/release/grafana-6.5.2.linux-amd64.tar.gz
 archive_checksum: 0a8bc55949aa920682b3bde99e9b1b87eef2c644bde8f8a48fa3ac746920d2ba
 checksum_format: sha256
 
-default_install_dir: /opt/grafana
-default_config_dir: /etc/grafana
+package_url: ''
+package_checksum: ''
+
+install_dir: /opt/grafana
+config_dir: /etc/grafana
+logs_dir: /var/log/grafana
+data_dir: /var/lib/grafana
+provisioning_dir: "{{ install_dir }}/conf/provisioning"
+plugins_dir: "{{ data_dir }}/plugins"
+
+provision_configs: ['dashboards', 'datasources', 'grafana_ini', 'notifiers']
 
 grafana_config_file: grafana.ini
 grafana_config: {}
 
+grafana_datasources: []
+datasources_directory: "{{ install_dir }}/provisioning/datasources"
+
+grafana_dashboards: []
+dashboards_directory: "{{ install_dir }}/provisioning/dashboards"
+
+grafana_notifiers: []
+notifiers_directory: "{{ install_dir }}/provisioning/notifiers"
+
+_service_name: grafana-server
 custom_unit_properties: {}
 extra_run_args: []
+
+perform_uninstall: false
