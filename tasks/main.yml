@@ -1,11 +1,15 @@
 ---
 - name: Include common preflight tasks
   include_tasks: "common/preflight.yml"
+  tags:
+    - preflight
 
-- name: perform common installation procedure
+- name: perform common installation tasks
   include_tasks: "common/install.yml"
+  tags:
+    - install
 
-- name: Include OS and distribution specific installation tasks.
+- name: Include OS and distribution specific installation tasks
   include_tasks: "{{ item }}"
   with_first_found:
     - files:
@@ -17,6 +21,10 @@
 
 - name: Include common configuration tasks
   include_tasks: "common/config.yml"
+  tags:
+    - config
 
 - name: Include common launch tasks
   include_tasks: "common/launch.yml"
+  tags:
+    - launch

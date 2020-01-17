@@ -2,6 +2,9 @@
 - name: Default playbook for testing
   hosts: test-kitchen
   roles:
-    - ansible-role-grafana
-  vars:
-    install_type: package
+    - role: ansible-role-grafana
+      vars:
+        install_type: package
+      tags:
+        - install
+        - package

@@ -6,6 +6,8 @@
     owner: "{{ grafana_user }}"
     group: "{{ grafana_user }}"
     state: directory
+  tags:
+    - config
 
 - name: Ensure existence of logs dir
   become: true
@@ -14,6 +16,9 @@
     owner: "{{ grafana_user }}"
     group: "{{ grafana_user }}"
     state: directory
+  tags:
+    - config
+    - logs
 
 - name: Ensure existence of data dir
   become: true
@@ -22,6 +27,9 @@
     owner: "{{ grafana_user }}"
     group: "{{ grafana_user }}"
     state: directory
+  tags:
+    - config
+    - data
 
 - name: Ensure existence of provisioning dir
   become: true
@@ -30,6 +38,9 @@
     owner: "{{ grafana_user }}"
     group: "{{ grafana_user }}"
     state: directory
+  tags:
+    - config
+    - provisioning
 
 - name: Ensure existence of plugins dir
   become: true
@@ -38,9 +49,13 @@
     owner: "{{ grafana_user }}"
     group: "{{ grafana_user }}"
     state: directory
+  tags:
+    - config
+    - plugins
 
 - name: Include provisioned configuration tasks
   include_tasks: "common/config/{{ item }}.yml"
   with_items: "{{ provision_configs }}"
   tags:
     - config
+    - provisioning

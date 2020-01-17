@@ -5,6 +5,8 @@
     name: "{{ grafana_user }}"
     state: present
     system: true
+  tags:
+    - install
 
 - name: Create Grafana system user
   become: true
@@ -15,6 +17,8 @@
     shell: "/sbin/nologin"
     system: true
     create_home: false
+  tags:
+    - install
 
 - name: Create installation directory
   file:
@@ -24,6 +28,8 @@
     group: "{{ grafana_user }}"
   become: true
   when: install_type == "archive"
+  tags:
+    - install
 
 - name: Download Grafana archive ({{ archive_url }})
   get_url:
@@ -36,6 +42,8 @@
   register: archive_tmp
   become: true
   when: install_type == "archive"
+  tags:
+    - install
 
 - name: Extract Grafana archive
   become: true
@@ -50,3 +58,5 @@
       - --strip-components
       - '1'
   when: install_type == "archive"
+  tags:
+    - install
