@@ -1,0 +1,51 @@
+---
+- name: Include OS and distribution specific variables.
+  include_vars: "{{ item }}"
+  with_first_found:
+    - files:
+        - "{{ ansible_distribution|lower }}.yml"
+        - "{{ ansible_os_family|lower }}.yml"
+      skip: true
+
+- name: Set Grafana logs directory
+  set_fact:
+    logs_dir: "{{ grafana_config.paths.logs }}"
+  when: grafana_config.paths.logs is defined and grafana_config.paths.logs|length > 0
+
+- name: Set Grafana sqlite3 data directory
+  set_fact:
+    data_dir: "{{ grafana_config.paths.data }}"
+  when: grafana_config.paths.data is defined and grafana_config.paths.data|length > 0
+
+- name: Set Grafana provisioning directory
+  set_fact:
+    provisioning_dir: "{{ grafana_config.paths.provisioning }}"
+  when: grafana_config.paths.provisioning is defined and grafana_config.paths.provisioning|length > 0
+
+- name: Set Grafana plugins directory
+  set_fact:
+    plugins_dir: "{{ grafana_config.paths.plugins }}"
+  when: grafana_config.paths.plugins is defined and grafana_config.paths.plugins|length > 0
+
+- name: Set unit [Service] configuration
+  set_fact:
+    default_service_unit:
+      ExecStart: "{{ install_dir }}/bin/grafana-server -config {{ config_dir }}/{{ grafana_config_file }} {{ extra_run_args|join(' ') }}"
+      User: "{{ grafana_user }}"
+      Group: "{{ grafana_user }}"
+      WorkingDirectory: "{{ install_dir }}"
+      StandardOutput: journal
+      StandardError: inherit
+  when: install_type != "package"
+
+- name: Check for uninstall signal
+  block:
+    - name: Broadcast uninstall signal
+      command: /bin/true
+      notify:
+        - Uninstall service
+
+    - name: End play following uninstallation
+      meta: end_play
+  when: perform_uninstall
+  ignore_errors: true

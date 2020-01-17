@@ -1,0 +1,21 @@
+---
+- name: Ensure existence of provisioning notifiers dir
+  become: true
+  file:
+    path: "{{ provisioning_dir }}/notifiers"
+    owner: "{{ grafana_user }}"
+    group: "{{ grafana_user }}"
+    state: directory
+
+- name: Render Grafana provisioned notifiers configuration
+  become: true
+  template:
+    src: notifiers.j2
+    dest: "{{ provisioning_dir }}/notifiers/{{ item.name }}"
+    owner: "{{ grafana_user }}"
+    group: "{{ grafana_user }}"
+    mode: 0644
+  vars:
+    notifiers: "{{ item.notifiers }}"
+    delete_notifiers: "{{ item.delete_notifiers }}"
+  when: grafana_notifiers is defined and grafana_notifiers | length > 0

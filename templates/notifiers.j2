@@ -1,0 +1,7 @@
+{{ ansible_managed | comment }}
+
+notifiers:
+{{ notifiers | to_nice_yaml }}
+
+delete_notifiers:
+{{ delete_notifiers | to_nice_yaml }}

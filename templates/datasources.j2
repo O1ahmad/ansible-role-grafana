@@ -1,0 +1,7 @@
+{{ ansible_managed | comment }}
+
+apiVersion: {{ version | default(1) }}
+
+{{ deleteDatasources | to_nice_yaml }}
+
+{{ datasources | to_nice_yaml }}

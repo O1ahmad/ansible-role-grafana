@@ -1,0 +1,9 @@
+---
+- name: Default playbook for testing
+  hosts: test-kitchen
+  roles:
+    - ansible-role-grafana
+  vars:
+    install_type: archive
+    provision_configs: ['notifiers']
+    grafana_notifiers: []

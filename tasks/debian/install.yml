@@ -1,0 +1,26 @@
+---
+- name: Download Grafana DEB package ({{ package_url }})
+  become: true
+  get_url:
+    url: "{{ package_url }}"
+    dest: "/tmp/{{ package_url | urlsplit('path') | basename }}"
+    checksum: "{{ checksum_format }}:{{ package_checksum }}"
+    owner: "{{ grafana_user }}"
+    group: "{{ grafana_user }}"
+    mode: '0775'
+  register: package_tmp
+  when: ansible_os_family|lower == "debian" and install_type == "package"
+  tags:
+    - install
+    - package
+
+- name: Install Grafana deb package
+  become: true
+  apt:
+    deb: "{{ package_tmp.dest }}"
+    state: present
+    update_cache: true
+  when: ansible_os_family|lower == "debian" and install_type == "package"
+  tags:
+    - install
+    - package

@@ -1,13 +1,13 @@
 {{ ansible_managed | comment }}
 
-{% for section in conf %}
-[{{ section }}]
-{% for key, value in config[section].items() %}
-{% if value is string %}
-{{ key }} = "{{ value }}"
+{% for key,value in conf.items() %}
+{% if value is not mapping %}
+{{ key }} = {{ value }}
 {% else %}
-{{ key }} = {{ value | to_json }}
-{% endif %}
+[{{ key }}]
+{% for k, v in value.items() %}
+{{ k }} = {{ v }}
 {% endfor %}
+{% endif %}
 
 {% endfor %}

@@ -91,15 +91,51 @@ platforms:
         - systemctl enable ssh.service
 
 suites:
-  - name: archive_install
+  - name: install_archive
     provisioner:
-      playbook: test/integration/install/archive_install/default_playbook.yml
+      playbook: test/integration/install/install_archive/default_playbook.yml
     verifier:
       inspec_tests:
-        - path: test/integration/install/archive_install
-  - name: explore
+        - path: test/integration/install/install_archive
+  - name: install_package
     provisioner:
-      playbook: test/integration/explore/default_playbook.yml
+      playbook: test/integration/install/install_package/default_playbook.yml
     verifier:
       inspec_tests:
-        - path: test/integration/explore
+        - path: test/integration/install/install_package
+  - name: config_grafana_ini
+    provisioner:
+      playbook: test/integration/config/grafana_ini/default_playbook.yml
+    verifier:
+      inspec_tests:
+        - path: test/integration/config/grafana_ini
+  - name: config_dashboards
+    provisioner:
+      playbook: test/integration/config/dashboards/default_playbook.yml
+    verifier:
+      inspec_tests:
+        - path: test/integration/config/dashboards
+  - name: config_datasources
+    provisioner:
+      playbook: test/integration/config/datasources/default_playbook.yml
+    verifier:
+      inspec_tests:
+        - path: test/integration/config/datasources
+  - name: config_notifiers
+    provisioner:
+      playbook: test/integration/config/notifiers/default_playbook.yml
+    verifier:
+      inspec_tests:
+        - path: test/integration/config/notifiers
+  - name: launch
+    provisioner:
+      playbook: test/integration/launch/default_playbook.yml
+    verifier:
+      inspec_tests:
+        - path: test/integration/launch
+  - name: uninstall
+    provisioner:
+      playbook: test/integration/uninstall/default_playbook.yml
+    verifier:
+      inspec_tests:
+        - path: test/integration/uninstall

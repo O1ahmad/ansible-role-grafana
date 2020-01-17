@@ -1,11 +1,9 @@
 ---
-- name: Include OS and distribution specific variables.
-  include_vars: "{{ item }}"
-  with_first_found:
-    - files:
-        - "{{ ansible_distribution|lower }}.yml"
-        - "{{ ansible_os_family|lower }}.yml"
-      skip: true
+- name: Include common preflight tasks
+  include_tasks: "common/preflight.yml"
+
+- name: perform common installation procedure
+  include_tasks: "common/install.yml"
 
 - name: Include OS and distribution specific installation tasks.
   include_tasks: "{{ item }}"
@@ -14,9 +12,8 @@
         - "{{ ansible_distribution|lower }}/install.yml"
         - "{{ ansible_os_family|lower }}/install.yml"
       skip: true
-
-- name: Include common installation tasks
-  include_tasks: "common/install.yml"
+  tags:
+    - install
 
 - name: Include common configuration tasks
   include_tasks: "common/config.yml"
