@@ -6,14 +6,22 @@
       vars:
         perform_uninstall: false
         install_type: archive
+        provision_configs:
+          - grafana_ini
+          - dashboards
+          - datasources
+          - notifiers
         grafana_config:
           log:
-            mode: console file
             level: debug
-          log.console:
-            format: json
-          log.file:
-            format: json
     - role: ansible-role-grafana
       vars:
         perform_uninstall: true
+        provision_configs:
+          - grafana_ini
+          - dashboards
+          - datasources
+          - notifiers
+        grafana_config:
+          log:
+            level: debug

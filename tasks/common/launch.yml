@@ -14,9 +14,14 @@
         Install:
           WantedBy: multi-user.target
   when: install_type != "package"
+  tags:
+    - launch
 
 - name: Ensure start of grafana service
-  service:
+  become: true
+  systemd:
     name: "{{ _service_name }}"
     state: started
     enabled: "yes"
+  tags:
+    - launch

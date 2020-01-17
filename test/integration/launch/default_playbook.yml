@@ -6,6 +6,7 @@
   vars:
     install_type: archive
     extra_run_args: ''
+    provision_configs: ['grafana_ini', 'dashboards', 'datasources', 'notifiers']
     grafana_config:
       instance_name: test
       server:

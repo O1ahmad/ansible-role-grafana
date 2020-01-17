@@ -6,26 +6,42 @@
         - "{{ ansible_distribution|lower }}.yml"
         - "{{ ansible_os_family|lower }}.yml"
       skip: true
+  tags:
+    - preflight
 
 - name: Set Grafana logs directory
   set_fact:
     logs_dir: "{{ grafana_config.paths.logs }}"
   when: grafana_config.paths.logs is defined and grafana_config.paths.logs|length > 0
+  tags:
+    - preflight
 
 - name: Set Grafana sqlite3 data directory
   set_fact:
     data_dir: "{{ grafana_config.paths.data }}"
   when: grafana_config.paths.data is defined and grafana_config.paths.data|length > 0
+  tags:
+    - preflight
+
+- name: Set Grafana provisioning dir by default based on install type
+  set_fact:
+    provisioning_dir: "{{ config_dir + '/provisioning' if install_type == 'package' else install_dir + '/conf/provisioning' }}"
+  tags:
+    - preflight
 
 - name: Set Grafana provisioning directory
   set_fact:
     provisioning_dir: "{{ grafana_config.paths.provisioning }}"
   when: grafana_config.paths.provisioning is defined and grafana_config.paths.provisioning|length > 0
+  tags:
+    - preflight
 
 - name: Set Grafana plugins directory
   set_fact:
     plugins_dir: "{{ grafana_config.paths.plugins }}"
   when: grafana_config.paths.plugins is defined and grafana_config.paths.plugins|length > 0
+  tags:
+    - preflight
 
 - name: Set unit [Service] configuration
   set_fact:
@@ -37,6 +53,8 @@
       StandardOutput: journal
       StandardError: inherit
   when: install_type != "package"
+  tags:
+    - preflight
 
 - name: Check for uninstall signal
   block:
@@ -49,3 +67,5 @@
       meta: end_play
   when: perform_uninstall
   ignore_errors: true
+  tags:
+    - preflight
