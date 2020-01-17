@@ -1,4 +1,12 @@
 ---
+- name: Check variable types
+  assert:
+    that:
+      - grafana_config is mapping
+      - grafana_datasources is iterable
+      - grafana_dashboards is iterable
+      - grafana_notifiers is iterable
+
 - name: Include OS and distribution specific variables.
   include_vars: "{{ item }}"
   with_first_found:
@@ -43,10 +51,14 @@
   tags:
     - preflight
 
+- name: Set ExecStart config spec
+  set_fact:
+    config_spec: "{{ '--config ' + config_dir + '/' + grafana_config_file if grafana_config.keys()|length > 0 else '' }}"
+
 - name: Set unit [Service] configuration
   set_fact:
     default_service_unit:
-      ExecStart: "{{ install_dir }}/bin/grafana-server -config {{ config_dir }}/{{ grafana_config_file }} {{ extra_run_args|join(' ') }}"
+      ExecStart: "{{ install_dir }}/bin/grafana-server {{ config_spec }} {{ extra_run_args|join(' ') }}"
       User: "{{ grafana_user }}"
       Group: "{{ grafana_user }}"
       WorkingDirectory: "{{ install_dir }}"
@@ -69,3 +81,13 @@
   ignore_errors: true
   tags:
     - preflight
+
+- name: Fail on unsupported system architectures
+  fail:
+    msg: "Sorry grafana doesn't support {{ ansible_architecture }} on this OS family ({{ ansible_os_family }}). Exiting."
+  when:
+    - ansible_architecture != "x86_64"
+    - not ( ansible_architecture in ['armv6l', 'armv7l'] and ansible_os_family == 'Debian' )
+  tags:
+    - preflight
+    - assert

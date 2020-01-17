@@ -1,7 +1,11 @@
 {{ ansible_managed | comment }}
 
+{% if notifiers is defined %}
 notifiers:
-{{ notifiers | to_nice_yaml }}
+{{ notifiers | to_nice_yaml(indent=2) }}
+{% endif %}
 
+{% if delete_notifiers is defined %}
 delete_notifiers:
-{{ delete_notifiers | to_nice_yaml }}
+{{ delete_notifiers | to_nice_yaml(indent=2) }}
+{% endif %}

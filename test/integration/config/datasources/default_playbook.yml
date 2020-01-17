@@ -2,8 +2,21 @@
 - name: Default playbook for testing
   hosts: test-kitchen
   roles:
-    - ansible-role-grafana
-  vars:
-    install_type: archive
-    provision_configs: ['datasources']
-    grafana_datasources: []
+    - role: ansible-role-grafana
+      vars:
+        install_type: archive
+        provision_configs: ['grafana_ini', 'datasources']
+        grafana_datasources:
+          - name: test-example
+            datasources:
+              - name: Prometheus
+                type: prometheus
+                orgId: 1
+                url: http://localhost:9090
+              - name: Elasticsearch
+                type: elasticsearch
+                orgId: 1
+                url: http://localhost:9200
+            deleteDatasources:
+              - name: Graphite
+                orgId: 1
