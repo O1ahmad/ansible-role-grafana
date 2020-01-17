@@ -17,7 +17,7 @@ data_dir: /var/lib/grafana
 provisioning_dir: "{{ install_dir }}/conf/provisioning"
 plugins_dir: "{{ data_dir }}/plugins"
 
-provision_configs: ['grafana_ini']
+provision_configs: []
 
 grafana_config_file: grafana.ini
 grafana_config: {}

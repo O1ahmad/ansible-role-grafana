@@ -94,6 +94,7 @@ suites:
   - name: install_archive
     provisioner:
       playbook: test/integration/install/install_archive/default_playbook.yml
+      ansible_extra_flags: '--skip-tags=config,launch'
     verifier:
       inspec_tests:
         - path: test/integration/install/install_archive
@@ -101,15 +102,13 @@ suites:
     provisioner:
       playbook: test/integration/install/install_package/default_playbook.yml
       ansible_extra_flags: '--skip-tags=config,launch'
-      ansible_verbose: true
-      extra_flags:
-        tags: install
     verifier:
       inspec_tests:
         - path: test/integration/install/install_package
   - name: config_grafana_ini
     provisioner:
       playbook: test/integration/config/grafana_ini/default_playbook.yml
+      ansible_extra_flags: '--skip-tags=launch'
     verifier:
       inspec_tests:
         - path: test/integration/config/grafana_ini

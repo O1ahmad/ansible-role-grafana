@@ -11,11 +11,12 @@
   become: true
   template:
     src: notifiers.j2
-    dest: "{{ provisioning_dir }}/notifiers/{{ item.name }}"
+    dest: "{{ provisioning_dir }}/notifiers/{{ item.name }}.yml"
     owner: "{{ grafana_user }}"
     group: "{{ grafana_user }}"
     mode: 0644
   vars:
-    notifiers: "{{ item.notifiers }}"
-    delete_notifiers: "{{ item.delete_notifiers }}"
+    notifiers: "{{ item.notifiers | default(omit) }}"
+    delete_notifiers: "{{ item.delete_notifiers | default(omit) }}"
+  loop: "{{ grafana_notifiers }}"
   when: grafana_notifiers is defined and grafana_notifiers | length > 0

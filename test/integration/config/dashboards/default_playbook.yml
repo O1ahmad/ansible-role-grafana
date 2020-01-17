@@ -2,8 +2,20 @@
 - name: Default playbook for testing
   hosts: test-kitchen
   roles:
-    - ansible-role-grafana
-  vars:
-    install_type: archive
-    provision_configs: ['dashboards']
-    grafana_dashboards: []
+    - role: ansible-role-grafana
+      vars:
+        install_type: archive
+        provision_configs: ['dashboards']
+        grafana_config:
+          paths:
+            data: /var/lib/grafana
+            provisioning: /var/lib/grafana/provisioning
+        grafana_dashboards:
+          - name: test-example
+            providers:
+              - name: 'default'
+                orgId: 1
+                folder: ''
+                type: file
+                options:
+                  path: "/var/lib/grafana/conf/provisioning/dashboards"

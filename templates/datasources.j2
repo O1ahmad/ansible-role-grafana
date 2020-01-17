@@ -2,6 +2,12 @@
 
 apiVersion: {{ version | default(1) }}
 
-{{ deleteDatasources | to_nice_yaml }}
+{% if deleteDatasources is defined %}
+deleteDatasources:
+{{ deleteDatasources | to_nice_yaml(indent=2) }}
+{% endif %}
 
-{{ datasources | to_nice_yaml }}
+{% if datasources is defined %}
+datasources:
+{{ datasources | to_nice_yaml(indent=2) }}
+{% endif %}

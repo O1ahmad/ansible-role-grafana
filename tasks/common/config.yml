@@ -53,7 +53,12 @@
     - config
     - plugins
 
-- name: Include provisioned configuration tasks
+- name: Include main configuration tasks
+  include_tasks: "common/config/grafana_ini.yml"
+  tags:
+    - config
+
+- name: Include provisioning configuration tasks
   include_tasks: "common/config/{{ item }}.yml"
   with_items: "{{ provision_configs }}"
   tags:
