@@ -438,7 +438,7 @@ _The following variables can be customized to manage the service's **systemd** [
 `extra_run_args: <prometheus-cli-options>` (**default**: `[]`)
 - list of `grafana` commandline arguments to pass to the binary at runtime for customizing launch.
 
-Supporting full expression of `grafana`'s [cli](https://gist.github.com/0x0I/eec137d55a26a16d836b84cbc186ab52), this variable enables the launch to be customized according to the user's specification.
+Supporting full expression of `grafana`'s [cli](https://gist.github.com/0x0I/d4d6c828a4f456f778f64b104b6af3bf), this variable enables the launch to be customized according to the user's specification.
 
 `custom_unit_properties: <hash-of-systemd-service-settings>` (**default**: `[]`)
 - hash of settings used to customize the `[Service]` unit configuration and execution environment of the *Grafana* **systemd** service.
@@ -487,6 +487,17 @@ adust Grafana installation, configuration and data directories:
       data_dir: /mnt/grafana
 ```
 
+launch Grafana in debug mode for troubleshooting purposes and *only* output to console/stdout{err}:
+```
+- hosts: all
+  roles:
+  - role: 0xOI.grafana
+    vars:
+      grafana_config:
+        log:
+          level: debug
+          mode: console
+```
 License
 -------
 
