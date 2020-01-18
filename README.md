@@ -87,158 +87,230 @@ Using this role, configuration of a `grafana` installation is organized accordin
 Each configuration can be expressed within the following variables in order to customize the contents and settings of the designated configuration files to be rendered:
 
 `config_dir: </path/to/configuration/dir>` (**default**: `{{ install_dir }}`)
-- path on target host where `prometheus` config files should be rendered
+- path on target host where `grafana` config file should be rendered
 
-`data_dir: </path/to/data/dir>` (**default**: `/var/data/prometheus`)
-- path on target host where `prometheus` stores data
+`provision_configs: <['datasources', 'dashboards' and/or 'notifiers']>` (**default**: [])
+- list of Grafana provisioning components to configure. See [here](https://grafana.com/docs/grafana/latest/administration/provisioning/) for more details.
 
-`alertmgr_configdir: </path/to/configuration/dir>` (**default**: `{{ alertmgr_installdir }}`)
-- path on target host where `alertmanager` config files should be rendered
+#### Grafana Service configuration
 
-`alertmgr_datadir: </path/to/data/dir>` (**default**: `/var/data/prometheus`)
-- path on target host where `alertmanager` stores data
+Grafana service configuration is contained within an INI file, *grafana.ini by default*, which defines a set of service behaviors organized by section representing general administration and various content provider aspects of the Grafana service. These sections and settings can expressed within the hash, `grafana_config`, keyed by configuration section with dicts as values representing config section specifications (e.g. the path to store the sqlite3 database file -- activated by default). The following provides an overview and example configurations of each section for reference.
 
-#### Prometheus Service configuration
+###### :path
 
-Prometheus service configuration can be expressed within the hash, `prometheus_config`, which contains a set of key-value pairs representing one of a set of sections indicating various scrape targets (sources from which to collect metrics), service discovery mechanisms, recording/alert rulesets and configurations for interfacing with remote read/write systems utlized by the Prometheus service.
-
-The values of these keys are generally dicts or lists of dicts themselves containing a set of key-value pairs representing associated specifications/settings (e.g. the scrape interval or frequency at which to scrape targets for metrics globally) for each section. The following provides an overview and example configurations of each for reference.
-
-###### :global
-
-`[prometheus_config:] global: <key: value,...>` (**default**: see `defaults/main.yml`)
-- specifies parameters that are valid and serve as defaults in all other configuration contexts. See  [here](https://prometheus.io/docs/prometheus/latest/configuration/configuration/) for more details.
+`[grafana_config:] path: <key: value,...>` (**default**: see [section](https://grafana.com/docs/grafana/latest/installation/configuration/#paths) documentation)
+- specifies parameters that are related to where Grafana stores artifacts and variable data.
 
 ##### Example
 
  ```yaml
-  prometheus_config:
-    global:
-      # How frequently to scrape targets by default.
-      scrape_interval: 15s
-      # How long until a scrape request times out.
-      scrape_timeout: 30s
-      # How frequently to evaluate rules.
-      evaluation_interval: 30s
-      # The labels to add to any time series or alerts when communicating with
-      # external systems (federation, remote storage, Alertmanager).
-      external_labels:
-        monitor: example
-        foo: bar
+  grafana_config:
+    # section [paths]
+    paths:
+      # section option 1 - path of sqlite database
+      data: /mnt/data/grafana
+      # section option 2 - path to store logs
+      logs: /mnt/logs/grafana
   ```
 
-###### :scrape_configs
+###### :server
 
-`[prometheus_config:] scrape_configs: <list-of-dicts>` (**default**: see `defaults/main.yml`)
-- specifies a set of targets and parameters describing how to scrape them organized into jobs
-
-Targets may be statically configured or dynamically discovered using one of the supported service discovery mechanisms. See [here](https://prometheus.io/docs/prometheus/latest/configuration/configuration/#scrape_config) for more details and [here](https://prometheus.io/docs/prometheus/latest/configuration/configuration/) for a list of supported service discovery methods.
+`[grafana_config:] server: <key: value,...>` (**default**: see [section](https://grafana.com/docs/grafana/latest/installation/configuration/#server) documentation)
+- specifies parameters that are related to how Grafana interfaces over the network
 
 ##### Example
 
  ```yaml
-  prometheus_config:
-    scrape_configs:
-      - job_name: static-example
-        static_configs:
-        - targets: ['localhost:9090', 'localhost:9191']
-          labels:
-            example: label
-      - job_name: kubernetes-example
-        kubernetes_sd_configs:
-        - role: endpoints
-          api_server: 'https://localhost:1234'
-          namespaces:
-            names:
-              - default
+  grafana_config:
+    # section [server]
+    server:
+      http_addr: 127.0.0.1
+      http_port: 3030
   ```
+  
+###### :database
 
-###### :rule_files
-
-`[prometheus_config:] rule_files: <list>` (**default**: see `defaults/main.yml`)
-- specifies a list of globs indicating file names and paths
-
-Rules and alerts are read from all matching files. Rules fall into one of two categories: recording and alerting. See [here](https://prometheus.io/docs/prometheus/latest/configuration/recording_rules/) for details surrounding recording rules and [here](https://prometheus.io/docs/prometheus/latest/configuration/alerting_rules/) for details surrounding alerting rules.
+`[grafana_config:] database: <key: value,...>` (**default**: see [section](https://grafana.com/docs/grafana/latest/installation/configuration/#database) documentation)
+- specifies parameters that control how grafana interfaces with one of the available backend datastores types (i.e. mysql, postgres and sqlite) 
 
 ##### Example
 
  ```yaml
-  prometheus_config:
-    rule_files:
-    - "example.yml"
-    - "example_rules/*"
+  grafana_config:
+    # section [database]
+    database:
+      type: mysql
+      host: 127.0.0.1:3306
+      name: grafana-test
+      user: mysql-admin
+      password: PASSWORD
   ```
+  
+###### :remote_cache
 
-###### :remote_read
-
-`[prometheus_config:] remote_read: <list-of-dicts>` (**default**: see `defaults/main.yml`)
-- specifies settings related to the remote read feature
-
-See [here](https://prometheus.io/docs/prometheus/latest/configuration/configuration/#remote_read) for more details.  For a list of available remote read/storage plugins/integrations, reference this [link](https://prometheus.io/docs/operating/integrations/#remote-endpoints-and-storage).
+`[grafana_config:] remote_cache: <key: value,...>` (**default**: see [section](https://grafana.com/docs/grafana/latest/installation/configuration/#remote-cache) documentation)
+- specifies parameters that control how grafana interfaces with one of the available remote-caching types (i.e. redis, memcached and database) 
 
 ##### Example
 
  ```yaml
-  prometheus_config:
-    remote_read:
-    - url: http://remote1/read
-      read_recent: true
-      name: default
-    - url: http://remote2/read
-      read_recent: false
-      name: read_special
-      required_matchers:
-        job: special
-      tls_config:
-        cert_file: valid_cert_file
-        key_file: valid_key_file
+  grafana_config:
+    # section [remote_cache]
+    remote_cache:
+      type: redis
+      connstr: addr=127.0.0.1:6379,pool_size=100,db=0,ssl=false
   ```
+  
+###### :security
 
-###### :remote_write
-
-`[prometheus_config:] remote_write: <list-of-dicts>` (**default**: see `defaults/main.yml`)
-- specifies settings related to the remote write feature
-
-See [here](https://prometheus.io/docs/prometheus/latest/configuration/configuration/#remote_write) for more details. For a list of available remote write/storage plugins/integrations, reference this [link](https://prometheus.io/docs/operating/integrations/#remote-endpoints-and-storage).
+`[grafana_config:] security: <key: value,...>` (**default**: see [section](https://grafana.com/docs/grafana/latest/installation/configuration/#security) documentation)
+- specifies parameters that manage Grafana user/organization authentication and authorization behavior 
 
 ##### Example
 
- ```yaml
-  prometheus_config:
-    remote_write:
-    - name: drop_expensive
-      url: http://remote1/push
-      write_relabel_configs:
-      - source_labels: [__name__]
-        regex: expensive.*
-        action: drop
-    - name: rw_tls
-      url: http://remote2/push
-      tls_config:
-        cert_file: valid_cert_file
-        key_file: valid_key_file
-  ```
+```yaml
+  grafana_config:
+    # section [security]
+    security:
+      admin_user: sre-user
+      admin_password: PASSWORD
+      login_remember_days: 7
+```
 
-###### :alerting
+###### :users
 
-`[prometheus_config:] alerting: <key: value,...>` (**default**: see `defaults/main.yml`)
-- specifies settings related to the Alertmanager in addition to Alertmanager instances the Prometheus server sends alerts to
-
-This section provides the parameters to configure how to communicate with these Alertmanagers. Alertmanagers may be statically configured via the static configs parameter or dynamically discovered using one of the supported service discovery mechanims. See [here](https://prometheus.io/docs/prometheus/latest/configuration/configuration/#alertmanager_config) for more details.
+`[grafana_config:] users: <key: value,...>` (**default**: see [section](https://grafana.com/docs/grafana/latest/installation/configuration/#users) documentation)
+- specifies parameters that control Grafana user capabilities 
 
 ##### Example
 
- ```yaml
-  prometheus_config:
-    alerting:
-      alertmanagers:
-      - scheme: https
-        static_configs:
-      - targets:
-        - "1.2.3.4:9093"
-        - "1.2.3.5:9093"
-  ```
-#### File service discovery
+```yaml
+  grafana_config:
+    # section [users]
+    users:
+      allow_sign_up: true
+      allow_org_create: true
+      login_hint: THIS IS A HINT
+```
+
+###### :auth
+
+`[grafana_config:] auth: <key: value,...>` (**default**: see [section](https://grafana.com/docs/grafana/latest/installation/configuration/#auth) documentation)
+- specifies parameters that regulate user authorization capabilites. Grafana provides many ways to authenticate users and settings for each method are expressed within [auth.<method>] sections as appropriate, allowing for basic user authentication to Google & Github OAuth. 
+
+##### Example
+
+```yaml
+  grafana_config:
+    # section [auth.github] - NOTE: **github** represents the auth method
+    auth.github:
+      enabled: true
+      allow_sign_up: true
+      client_id: YOUR_GITHUB_APP_CLIENT_ID
+      client_secret: YOUR_GITHUB_APP_CLIENT_SECRET
+      scopes: user:email,read:org
+      auth_url: https://github.com/login/oauth/authorize
+      token_url: https://github.com/login/oauth/access_token
+      api_url: https://api.github.com/user
+```
+
+###### :dataproxy
+
+`[grafana_config:] dataproxy: <key: value,...>` (**default**: see [section](https://grafana.com/docs/grafana/latest/installation/configuration/#dataproxy) documentation)
+- specifies parameters that enable data proxy logging
+
+##### Example
+
+```yaml
+  grafana_config:
+    # section [dataproxy]
+    dataproxy:
+      logging: true
+      timeout: 60
+      send_user_header: true
+```
+
+
+###### :analytics
+
+`[grafana_config:] analytics: <key: value,...>` (**default**: see [section](https://grafana.com/docs/grafana/latest/installation/configuration/#analytics) documentation)
+- specifies parameters that activate usage statistics collection and reporting
+
+##### Example
+
+```yaml
+  grafana_config:
+    # section [analytics]
+    analytics:
+      reporting_enabled: true
+      google_analytics_ua_id: UA_ID
+      check_for_updates: true
+```
+
+###### :dashboards
+
+`[grafana_config:] dashboards: <key: value,...>` (**default**: see [section](https://grafana.com/docs/grafana/latest/installation/configuration/#dashboards) documentation)
+- specifies parameters that regulate dashboard maintenance
+
+##### Example
+
+```yaml
+  grafana_config:
+    # section [dashboards]
+    dashboards:
+      versions_to_keep: 5
+```
+
+###### :smtp
+
+`[grafana_config:] smtp: <key: value,...>` (**default**: see [section](https://grafana.com/docs/grafana/latest/installation/configuration/#smtp) documentation)
+- specifies email server settings
+
+##### Example
+
+```yaml
+  grafana_config:
+    # section [smtp]
+    smtp:
+      enabled: true
+      host: 127.0.0.1:65
+      user: smtp-user
+      password: PASSWORD
+```
+
+###### :log
+
+`[grafana_config:] log: <key: value,...>` (**default**: see [section](https://grafana.com/docs/grafana/latest/installation/configuration/#log) documentation)
+- specifies logging settings (e.g. log level and output channels)
+
+##### Example
+
+```yaml
+  grafana_config:
+    # section [log]
+    log:
+      mode: console
+      level: debug
+```
+
+###### :metrics
+
+`[grafana_config:] log: <key: value,...>` (**default**: see [section](https://grafana.com/docs/grafana/latest/installation/configuration/#metrics) documentation)
+- specifies metric settings
+
+##### Example
+
+```yaml
+  grafana_config:
+    # section [metrics]
+    metrics:
+      enabled: true
+      interval_seconds: 5s
+    metrics.graphite:
+      address: 127.0.0.1:7070
+```
+
+#### Datasources
 
 File-based service discovery provides a more generic way to configure static targets and serves as an interface to plug in custom service discovery mechanisms. It reads a set of files containing a list of zero or more `<static_config>`s. Changes to all defined files are detected via disk watches and applied immediately. Files may be provided in YAML or JSON format. Only changes resulting in well-formed target groups are applied. See [here](https://prometheus.io/docs/prometheus/latest/configuration/configuration/#file_sd_config) for more details.
 
@@ -319,7 +391,7 @@ prometheus_rule_files:
 
 **NB:** An associated `rule_files` section is expected to be included within the `prometheus.yml` file for successful load.
 
-#### Alertmanager Service configuration
+#### Dashboards
 
 Alertmanager service configuration can be expressed within the hash, `alertmanager_config`, which contains a set of key-value pairs representing one of a set of sections indicating various route, receiver, templating and alert inhibition configurations.
 
@@ -440,7 +512,7 @@ The last component may use a wildcard matcher, e.g. `templates/*.tmpl`. See [her
     - '/etc/alertmanager/template/*.tmpl'
   ```
 
-#### Alertmanager templates
+#### Notifiers
 
 Prometheus creates and sends alerts to the Alertmanager which then sends notifications out to different receivers based on their labels. The notifications sent to receivers are constructed via templates. The Alertmanager comes with default templates but they can also be customized. See [here](https://prometheus.io/docs/alerting/notifications/) for more details.
 
