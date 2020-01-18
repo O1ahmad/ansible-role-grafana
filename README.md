@@ -58,7 +58,7 @@ _The following variables can be customized to control various aspects of this in
 - **archive**: compatible with both **tar and zip** formats, archived installation binaries can be obtained from local and remote compressed archives either from the official [releases index](https://github.com/grafana/grafana/releases) or those generated from development/custom sources.
 
 `install_dir: </path/to/installation/dir>` (**default**: `/opt/grafana`)
-- path on target host where the `grafana` binaries should be extracted to. **ONLY** relevant when `install_type` is set to **archive**
+- path on target host where the `grafana` binaries should be extracted to.
 
 `archive_url: <path-or-url-to-archive>` (**default**: see `defaults/main.yml`)
 - address of a compressed **tar or zip** archive containing `grafana` binaries. This method technically supports installation of any available version of `grafana`. Links to official versions can be found [here](https://grafana.com/grafana/download).
@@ -80,9 +80,9 @@ _The following variables can be customized to control various aspects of this in
 Using this role, configuration of a `grafana` installation is organized according to the following components:
 
 * grafana service configuration (`grafana.ini`)
-* provisioning of datasources (`datasources - *.[json|yml]`)
-* dashboard provisioning (`rule_files - *.[json|yml]`)
-* notifier setup (`alertmanager.yml`)
+* provisioning of datasources (`provisioning/datasources - *.[json|yml]`)
+* dashboard provisioning (`provisioning/dashboards - *.[json|yml]`)
+* notifier setup (`provisioning/notifiers - [json|yml]`)
 
 Each configuration can be expressed within the following variables in order to customize the contents and settings of the designated configuration files to be rendered:
 
