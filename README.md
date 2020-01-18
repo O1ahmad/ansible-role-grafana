@@ -332,7 +332,7 @@ These datasoure configurations can expressed within the hash, `grafana_datasourc
 
  ```yaml
   grafana_datasources:
-  - name: elasticsearch_datasource
+  - name: example_datasource
     datasources:
       - name: elasticsearch-logs
         type: elasticsearch
@@ -357,8 +357,6 @@ These datasoure configurations can expressed within the hash, `grafana_datasourc
           jsonData:
             graphiteVersion: "1.1"
   ```
-
-  **NB:** Datasources marked for deletion should have been previously imported.
 
 #### Dashboards
 
