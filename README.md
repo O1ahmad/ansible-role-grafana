@@ -99,7 +99,7 @@ Grafana service configuration is contained within an INI file, *grafana.ini by d
 ##### :path
 
 `[grafana_config:] path: <key: value,...>` (**default**: see [section](https://grafana.com/docs/grafana/latest/installation/configuration/#paths) documentation)
-- specifies parameters that are related to where Grafana stores artifacts and variable data.
+- specifies parameters that are related to where Grafana stores artifacts and variable data
 
 ##### Example
 
@@ -131,7 +131,7 @@ Grafana service configuration is contained within an INI file, *grafana.ini by d
 ##### :database
 
 `[grafana_config:] database: <key: value,...>` (**default**: see [section](https://grafana.com/docs/grafana/latest/installation/configuration/#database) documentation)
-- specifies parameters that control how grafana interfaces with one of the available backend datastores types (i.e. mysql, postgres and sqlite) 
+- specifies parameters that control how grafana interfaces with one of the available backend datastores types (i.e. *mysql, postgres and sqlite*) 
 
 ##### Example
 
@@ -149,7 +149,7 @@ Grafana service configuration is contained within an INI file, *grafana.ini by d
 ##### :remote_cache
 
 `[grafana_config:] remote_cache: <key: value,...>` (**default**: see [section](https://grafana.com/docs/grafana/latest/installation/configuration/#remote-cache) documentation)
-- specifies parameters that control how grafana interfaces with one of the available remote-caching types (i.e. redis, memcached and database) 
+- specifies parameters that control how grafana interfaces with one of the available remote-caching types (i.e. *redis, memcached and database*) 
 
 ##### Example
 
@@ -189,14 +189,16 @@ Grafana service configuration is contained within an INI file, *grafana.ini by d
     # section [users]
     users:
       allow_sign_up: true
-      allow_org_create: true
+      allow_org_create: false
       login_hint: THIS IS A HINT
 ```
 
 ##### :auth
 
 `[grafana_config:] auth: <key: value,...>` (**default**: see [section](https://grafana.com/docs/grafana/latest/installation/configuration/#auth) documentation)
-- specifies parameters that regulate user authorization capabilites. Grafana provides many ways to authenticate users and settings for each method are expressed within [auth.<method>] sections as appropriate, allowing for basic user authentication to Google & Github OAuth. 
+- specifies parameters that regulate user authorization capabilites
+
+Grafana provides multiple methods to authenticate users and settings for each method are expressed within [auth.<method>] sections as appropriate, allowing for authentication ranging from basic user auth to Google & Github OAuth. 
 
 ##### Example
 
@@ -230,7 +232,6 @@ Grafana service configuration is contained within an INI file, *grafana.ini by d
       send_user_header: true
 ```
 
-
 ##### :analytics
 
 `[grafana_config:] analytics: <key: value,...>` (**default**: see [section](https://grafana.com/docs/grafana/latest/installation/configuration/#analytics) documentation)
@@ -250,7 +251,7 @@ Grafana service configuration is contained within an INI file, *grafana.ini by d
 ##### :dashboards
 
 `[grafana_config:] dashboards: <key: value,...>` (**default**: see [section](https://grafana.com/docs/grafana/latest/installation/configuration/#dashboards) documentation)
-- specifies parameters that regulate dashboard maintenance
+- specifies parameters that regulates Grafana's dashboard maintenance policy
 
 ##### Example
 
@@ -264,7 +265,7 @@ Grafana service configuration is contained within an INI file, *grafana.ini by d
 ##### :smtp
 
 `[grafana_config:] smtp: <key: value,...>` (**default**: see [section](https://grafana.com/docs/grafana/latest/installation/configuration/#smtp) documentation)
-- specifies email server settings
+- specifies email server settings for identity in addition to alerting/notification
 
 ##### Example
 
@@ -281,7 +282,7 @@ Grafana service configuration is contained within an INI file, *grafana.ini by d
 ##### :log
 
 `[grafana_config:] log: <key: value,...>` (**default**: see [section](https://grafana.com/docs/grafana/latest/installation/configuration/#log) documentation)
-- specifies logging settings (e.g. log level and output channels)
+- specifies logging settings (e.g. log level and log output modes or channels)
 
 ##### Example
 
@@ -296,7 +297,7 @@ Grafana service configuration is contained within an INI file, *grafana.ini by d
 ##### :metrics
 
 `[grafana_config:] metrics: <key: value,...>` (**default**: see [section](https://grafana.com/docs/grafana/latest/installation/configuration/#metrics) documentation)
-- specifies metric settings
+- specifies settings for managing the emission of Grafana telemetry
 
 ##### Example
 
@@ -313,7 +314,7 @@ Grafana service configuration is contained within an INI file, *grafana.ini by d
 ##### :snapshots
 
 `[grafana_config:] snapshots: <key: value,...>` (**default**: see [section](https://grafana.com/docs/grafana/latest/installation/configuration/#snapshots) documentation)
-- specifies settings for managing the publishing behavior of Grafana's interactive dashboard snapshotting
+- specifies settings for managing the publishing behavior of Grafana's interactive dashboard snapshotting functionality
 
 ##### Example
 
@@ -322,7 +323,7 @@ Grafana service configuration is contained within an INI file, *grafana.ini by d
     # section [snapshots]
     snapshots:
       external_enabled: true
-      external_snapshot_name: Publish to ENDPOINT
+      external_snapshot_name: ENDPOINT
 ```
 
 ##### :external_image_storage
@@ -330,7 +331,7 @@ Grafana service configuration is contained within an INI file, *grafana.ini by d
 `[grafana_config:] external_image_storage: <key: value,...>` (**default**: see [section](https://grafana.com/docs/grafana/latest/installation/configuration/#external-image-storage) documentation)
 - specifies settings for controlling how images should be made publicly available for sharing on services like slack
 
-Grafana supports several backend storage providers for which individual configurations can be expressed within [external_image_storage.<provider>] sections as appropriate, enabling backend storage to services like `s3, gcs, azure blob and local storage`.
+Grafana supports several backend storage providers for which individual configurations can be expressed within [external_image_storage.<provider>] sections as appropriate, enabling remote storage to services like `s3, gcs, azure blob and local storage`.
 
 ##### Example
 
@@ -352,7 +353,7 @@ Grafana supports several backend storage providers for which individual configur
 ##### :alerting
 
 `[grafana_config:] alerting: <key: value,...>` (**default**: see [section](https://grafana.com/docs/grafana/latest/installation/configuration/#alerting) documentation)
-- specifies settings for managing alerting behavior and rulesets
+- specifies settings for managing Grafana's alerting engine and behavior/rulesets
 
 ##### Example
 
