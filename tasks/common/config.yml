@@ -12,7 +12,7 @@
 - name: Ensure existence of logs dir
   become: true
   file:
-    path: "{{ logs_dir }}"
+    path: "{{ _logs_dir }}"
     owner: "{{ grafana_user }}"
     group: "{{ grafana_user }}"
     state: directory
@@ -23,7 +23,7 @@
 - name: Ensure existence of data dir
   become: true
   file:
-    path: "{{ data_dir }}"
+    path: "{{ _data_dir }}"
     owner: "{{ grafana_user }}"
     group: "{{ grafana_user }}"
     state: directory
@@ -34,7 +34,7 @@
 - name: Ensure existence of provisioning dir
   become: true
   file:
-    path: "{{ provisioning_dir }}"
+    path: "{{ _provisioning_dir }}"
     owner: "{{ grafana_user }}"
     group: "{{ grafana_user }}"
     state: directory
@@ -45,7 +45,7 @@
 - name: Ensure existence of plugins dir
   become: true
   file:
-    path: "{{ plugins_dir }}"
+    path: "{{ _plugins_dir }}"
     owner: "{{ grafana_user }}"
     group: "{{ grafana_user }}"
     state: directory

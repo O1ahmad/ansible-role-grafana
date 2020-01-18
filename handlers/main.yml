@@ -39,28 +39,28 @@
 - name: Remove Grafana logs dir
   become: true
   file:
-    path: "{{ logs_dir }}"
+    path: "{{ _logs_dir }}"
     state: absent
   listen: Uninstall service
 
 - name: Remove Grafana data dir
   become: true
   file:
-    path: "{{ data_dir }}"
+    path: "{{ _data_dir }}"
     state: absent
   listen: Uninstall service
 
 - name: Remove Grafana provisioning dir
   become: true
   file:
-    path: "{{ provisioning_dir }}"
+    path: "{{ _provisioning_dir }}"
     state: absent
   listen: Uninstall service
 
 - name: Remove Grafana plugins dir
   become: true
   file:
-    path: "{{ plugins_dir }}"
+    path: "{{ _plugins_dir }}"
     state: absent
   listen: Uninstall service
 

@@ -2,7 +2,7 @@
 - name: Ensure existence of provisioning notifiers dir
   become: true
   file:
-    path: "{{ provisioning_dir }}/notifiers"
+    path: "{{ _provisioning_dir }}/notifiers"
     owner: "{{ grafana_user }}"
     group: "{{ grafana_user }}"
     state: directory
@@ -11,7 +11,7 @@
   become: true
   template:
     src: notifiers.j2
-    dest: "{{ provisioning_dir }}/notifiers/{{ item.name }}.yml"
+    dest: "{{ _provisioning_dir }}/notifiers/{{ item.name }}.yml"
     owner: "{{ grafana_user }}"
     group: "{{ grafana_user }}"
     mode: 0644

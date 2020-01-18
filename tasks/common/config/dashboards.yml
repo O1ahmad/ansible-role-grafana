@@ -2,7 +2,7 @@
 - name: Ensure existence of provisioning dashboards dir
   become: true
   file:
-    path: "{{ provisioning_dir }}/dashboards"
+    path: "{{ _provisioning_dir }}/dashboards"
     owner: "{{ grafana_user }}"
     group: "{{ grafana_user }}"
     state: directory
@@ -11,7 +11,7 @@
   become: true
   template:
     src: dashboards.j2
-    dest: "{{ provisioning_dir }}/dashboards/{{ item.name }}.yml"
+    dest: "{{ _provisioning_dir }}/dashboards/{{ item.name }}.yml"
     owner: "{{ grafana_user }}"
     group: "{{ grafana_user }}"
     mode: 0644
