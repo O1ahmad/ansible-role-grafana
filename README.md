@@ -31,7 +31,7 @@ Ansible role that installs and configures Grafana: an analytics and monitoring o
 Requirements
 ------------
 
-Requires the `unzip/gtar` utility to be installed on the target host. See ansible `unarchive` module [notes](https://docs.ansible.com/ansible/latest/modules/unarchive_module.html#notes) for details.
+Requires the `unzip/gtar` utility to be installed on the target host. See ansible `unarchive` module [notes](https://docs.ansible.com/ansible/latest/modules/unarchive_module.html#notes) for details. Also, due to the use of the `provisioning` feature introduced in version **5.0**, *versions >= 5.0* of Grafana are required for proper execution.
 
 Role Variables
 --------------
