@@ -12,10 +12,10 @@ package_checksum: ''
 
 install_dir: /opt/grafana
 config_dir: /etc/grafana
-logs_dir: /var/log/grafana
-data_dir: /var/lib/grafana
-provisioning_dir: "{{ install_dir }}/conf/provisioning"
-plugins_dir: "{{ data_dir }}/plugins"
+_logs_dir: /var/log/grafana
+_data_dir: /var/lib/grafana
+_provisioning_dir: "{{ install_dir }}/conf/provisioning"
+_plugins_dir: "{{ _data_dir }}/plugins"
 
 provision_configs: []
 

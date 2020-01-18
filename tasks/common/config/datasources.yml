@@ -2,7 +2,7 @@
 - name: Ensure existence of provisioning datasources dir
   become: true
   file:
-    path: "{{ provisioning_dir }}/datasources"
+    path: "{{ _provisioning_dir }}/datasources"
     owner: "{{ grafana_user }}"
     group: "{{ grafana_user }}"
     state: directory
@@ -11,7 +11,7 @@
   become: true
   template:
     src: datasources.j2
-    dest: "{{ provisioning_dir }}/datasources/{{ item.name }}.yml"
+    dest: "{{ _provisioning_dir }}/datasources/{{ item.name }}.yml"
     owner: "{{ grafana_user }}"
     group: "{{ grafana_user }}"
     mode: 0644
