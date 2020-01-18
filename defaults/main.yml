@@ -27,6 +27,7 @@ datasources_directory: "{{ install_dir }}/provisioning/datasources"
 
 grafana_dashboards: []
 dashboards_directory: "{{ install_dir }}/provisioning/dashboards"
+_dashboard_base_url: https://grafana.com/api/dashboards
 
 grafana_notifiers: []
 notifiers_directory: "{{ install_dir }}/provisioning/notifiers"

@@ -28,3 +28,12 @@
   include_tasks: "common/launch.yml"
   tags:
     - launch
+
+- name: Download and install Grafana provider dashboards
+  include_tasks: "common/install/dashboards.yml"
+  with_items: "{{ grafana_dashboards }}"
+  loop_control:
+    loop_var: provider
+  tags:
+    - install
+    - dashboard
