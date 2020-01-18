@@ -479,7 +479,7 @@ These datasoure configurations can expressed within the hash, `grafana_datasourc
 
 #### Dashboards
 
-Since version *5.0* Grafana has allowed adding one or more yaml config files in the provisioning/dashboards directory. Enabling Grafana to load dashboards from the local filesystem, this directory can contain a list of dashboards providers which indicate characteristics and various forms of meta data pertaining to the directory/file from which to load.
+Since version *5.0* Grafana has allowed adding one or more `yaml|json` config files in the provisioning/dashboards directory. Enabling Grafana to load dashboards from the local filesystem, this directory can contain a list of dashboards providers which indicate characteristics and various forms of meta data pertaining to the directory/file from which to load.
 
 These dashboard provider configurations can be expressed within the hash, `grafana_dashboards`, which is composed of a list of the aforementioned dashboard provider structures.  See [here](https://grafana.com/grafana/dashboards) for more details and a list of dashboards created by the community available for download and import.
 
@@ -502,19 +502,23 @@ These dashboard provider configurations can be expressed within the hash, `grafa
     - name: test-example
       apiVersion: 2
       providers:
-        - name: 'default'
-          orgId: 1
-          folder: ''
+        - name: 'default-example'
+          folder: 'default'
+          folderUid: 1
           type: file
+          disableDeletion: true
+          updateIntervalSeconds: 30
           options:
-            path: "/var/lib/grafana/conf/provisioning/dashboards"
+            path: /var/lib/grafana/conf/provisioning/dashboards
  ```
 
 #### Notifiers
 
-Alert Notification Channels can be provisioned by adding one or more yaml config files in the provisioning/notifiers directory.
+Alert Notification Channels can be provisioned by adding one or more `yaml|json` config files in the provisioning/notifiers directory.
 
-Each config file can be expressed within the `grafana_notifiers` hash containing the following top-level fields: - notifiers, a list of alert notifications that will be added or updated during start up. If the notification channel already exists, Grafana will update it to match the configuration file. - delete_notifiers, a list of alert notifications to be deleted before before inserting/updating those in the notifiers list.
+Each config file can be expressed within the `grafana_notifiers` hash containing the following top-level fields:
+  - notifiers, a list of alert notifications that will be added or updated during start up. If the notification channel already exists, Grafana will update it to match the configuration file.
+  - delete_notifiers, a list of alert notifications to be deleted before before inserting/updating those in the notifiers list.
 
 Provisioning looks up alert notifications by uid, and will update any existing notification with the provided uid.
 
