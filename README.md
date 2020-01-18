@@ -75,18 +75,6 @@ _The following variables can be customized to control various aspects of this in
 `package_checksum: <path-or-url-to-checksum>` (**default**: see `defaults/main.yml`)
 - address of a checksum file for verifying the data integrity of the specified `grafana` package. While recommended and generally considered a best practice, specifying a checksum is *not required* and can be disabled by providing an empty string (`''`) for its value.
 
-`data_dir: </path/to/data/dir>` (**default**: `/var/lib/grafana`)
-- path on target host where the `grafana` *sqlite3* database artifacts/data should be stored
-
-`logs_dir: </path/to/logs/dir>` (**default**: `/var/log/grafana`)
-- path on target host where the `grafana` service logs should be stored
-
-`provisioning_dir: </path/to/data/dir>` (**default**: `see defaults/main.yml`)
-- path on target host where the `grafana` provisioning configs (i.e. *datasources, dashboards, and notifiers*) should be stored and read from
-
-`plugin_dir: </path/to/plugin/dir>` (**default**: `/var/lib/grafana/plugins`)
-- path on target host where the `grafana` plugins should be stored
-
 #### Config
 
 Using this role, configuration of a `grafana` installation is organized according to the following components:
