@@ -53,7 +53,7 @@ _The following variables can be customized to control various aspects of this in
 `install_type: <package | archive>` (**default**: archive)
 - **package**: supported by Debian and Redhat distributions, package installation of Grafana pulls the specified package from the respective package management repository.
 
-  - Note that the installation directory is determined by the package management system and currently defaults to under `/usr/{bin,lib, share}` for both distros.
+  - Note that the installation directory is determined by the package management system and currently defaults to under `/usr/{sbin,lib, share}` for all distros.
 
 - **archive**: compatible with both **tar and zip** formats, archived installation binaries can be obtained from local and remote compressed archives either from the official [releases index](https://github.com/grafana/grafana/releases) or those generated from development/custom sources.
 
