@@ -295,7 +295,7 @@ Grafana service configuration is contained within an INI file, *grafana.ini by d
 
 ##### :metrics
 
-`[grafana_config:] log: <key: value,...>` (**default**: see [section](https://grafana.com/docs/grafana/latest/installation/configuration/#metrics) documentation)
+`[grafana_config:] metrics: <key: value,...>` (**default**: see [section](https://grafana.com/docs/grafana/latest/installation/configuration/#metrics) documentation)
 - specifies metric settings
 
 ##### Example
@@ -308,6 +308,124 @@ Grafana service configuration is contained within an INI file, *grafana.ini by d
       interval_seconds: 5s
     metrics.graphite:
       address: 127.0.0.1:7070
+```
+
+##### :snapshots
+
+`[grafana_config:] snapshots: <key: value,...>` (**default**: see [section](https://grafana.com/docs/grafana/latest/installation/configuration/#snapshots) documentation)
+- specifies settings for managing the publishing behavior of Grafana's interactive dashboard snapshotting
+
+##### Example
+
+```yaml
+  grafana_config:
+    # section [snapshots]
+    snapshots:
+      external_enabled: true
+      external_snapshot_name: Publish to ENDPOINT
+```
+
+##### :external_image_storage
+
+`[grafana_config:] external_image_storage: <key: value,...>` (**default**: see [section](https://grafana.com/docs/grafana/latest/installation/configuration/#external-image-storage) documentation)
+- specifies settings for controlling how images should be made publicly available for sharing on services like slack
+
+Grafana supports several backend storage providers for which individual configurations can be expressed within [external_image_storage.<provider>] sections as appropriate, enabling backend storage to services like `s3, gcs, azure blob and local storage`.
+
+##### Example
+
+```yaml
+  grafana_config:
+    # section [external_image_storage]
+    external_image_storage:
+      external_enabled: true
+      external_snapshot_name: Publish to ENDPOINT
+    external_image_storage.s3:
+      endpoint: http://example.org.s3/
+      bucket: grafana-snapshots
+      region: us-east-1
+      path: ${HOSTNAME}
+      access_key: ACCESS_KEY
+      secret_key: SECRET_KEY
+```
+
+##### :alerting
+
+`[grafana_config:] alerting: <key: value,...>` (**default**: see [section](https://grafana.com/docs/grafana/latest/installation/configuration/#alerting) documentation)
+- specifies settings for managing alerting behavior and rulesets
+
+##### Example
+
+```yaml
+  grafana_config:
+    # section [alerting]
+    alerting:
+      enabled: true
+      execute_alerts: true
+      nodata_or_nullvalues: no_data
+      evaluation_timeout_seconds: 10
+      notification_timeout_seconds: 60
+      max_attempts: 5
+```
+
+##### :rendering
+
+`[grafana_config:] rendering: <key: value,...>` (**default**: see [section](https://grafana.com/docs/grafana/latest/installation/configuration/#rendering) documentation)
+- specifies settings for operating a remote HTTP rendering service
+
+##### Example
+
+```yaml
+  grafana_config:
+    # section [rendering]
+    rendering:
+      server_url: http://localhost:8081/render
+      callback_url: http://grafana.open.domain
+```
+
+##### :plugins
+
+`[grafana_config:] plugins: <key: value,...>` (**default**: see [section](https://grafana.com/docs/grafana/latest/installation/configuration/#plugins-1) documentation)
+- specifies settings for managing the availability and accessibility of grafana plugins
+
+##### Example
+
+```yaml
+  grafana_config:
+    # section [plugins]
+    plugins:
+      enable_alpha: true
+```
+
+##### :feature_toggles
+
+`[grafana_config:] feature_toggles: <key: value,...>` (**default**: see [section](https://grafana.com/docs/grafana/latest/installation/configuration/#feature-toggles) documentation)
+- specifies settings for toggling the use of alpha features by the grafana instance, delimited by spaces
+
+##### Example
+
+```yaml
+  grafana_config:
+    # section [feature_toggles]
+    features_toggles:
+      enable: transformations
+```
+
+##### :tracing.jaeger
+
+`[grafana_config:] tracing.jaegar: <key: value,...>` (**default**: see [section](https://grafana.com/docs/grafana/latest/installation/configuration/#tracing-jaeger) documentation)
+- specifies settings for configuring Grafana's Jaegar client for distributed tracing.
+
+**Note:** standard Jaegar environment variables, prefixed by `JAEGAR_*`, can still be specified and will override any settings provided herein.
+
+##### Example
+
+```yaml
+  grafana_config:
+    # section [tracing.jaegar]
+    tracing.jaegar:
+      address: http://localhost:6381
+      always_included_tag: key1:value1,key2:value2
 ```
 
 #### Datasources
