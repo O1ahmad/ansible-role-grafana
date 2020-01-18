@@ -312,9 +312,9 @@ Grafana service configuration is contained within an INI file, *grafana.ini by d
 
 #### Datasources
 
-Grafana supports many different storage backends for your time series data known as datasources. Each datsource can be configured in a set of `json|yml` configuration files under Grafana's `provisioning` directory (which can be adjusted within the `[paths]` grafana.ini section.
+Grafana supports many different storage backends for your time series data known as datasources. Each datsource can be configured in a set of `json|yml` configuration files under Grafana's `provisioning` directory, which can be adjusted within the `[paths]` grafana.ini section.
 
-These datasoure configurations can expressed within the hash, `grafana_datasources`, which contains a list of data source structures for activation and another for deletion, keyed by `datasources` and `deleteDatasources`, respectively, with list of dicts as values, themselves, representing individual datsource specifications.  See [here](https://grafana.com/docs/grafana/latest/features/datasources/#supported-data-sources) for more details and a list of supported datasources.
+These datasoure configurations can expressed within the hash, `grafana_datasources`. This hash contains a list of data source structures for activation and another for deletion, keyed by `datasources` and `deleteDatasources`, respectively. The values themselves consist of a list of dicts representing individual datasource specifications.  See [here](https://grafana.com/docs/grafana/latest/features/datasources/#supported-data-sources) for more details and a list of supported datasources.
 
 `grafana_datasources: <list-of-dicts>` (**default**: [])
 - specifies grafana datasource definitions to render. See [here](https://grafana.com/grafana/plugins?orderBy=weight&direction=asc) for a reference to available datasources from the community and their respective options.
@@ -349,18 +349,16 @@ These datasoure configurations can expressed within the hash, `grafana_datasourc
         type: prometheus
         access: proxy
         url: http://localhost:9090
-      deleteDatasources:
-        - name: graphite-legacy
-          type: graphite
-          access: proxy
-          url: http://localhost:8080
-          jsonData:
-            graphiteVersion: "1.1"
+    deleteDatasources:
+      - name: graphite-legacy
+        type: graphite
+        access: proxy
+        url: http://localhost:8080
+        jsonData:
+          graphiteVersion: "1.1"
   ```
 
 #### Dashboards
-
-Grafana supports many different storage backends for your time series data known as datasources. Each datsource can be configured in a set of `json|yml` configuration files under Grafana's `provisioning` directory (which can be adjusted within the `[paths]` grafana.ini section.
 
 Since version *5.0* Grafana has allowed adding one or more yaml config files in the provisioning/dashboards directory. Enabling Grafana to load dashboards from the local filesystem, this directory can contain a list of dashboards providers which indicate characteristics and various forms of meta data pertaining to the directory/file from which to load.
 
