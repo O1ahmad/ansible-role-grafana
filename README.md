@@ -96,7 +96,7 @@ Each configuration can be expressed within the following variables in order to c
 
 Grafana service configuration is contained within an INI file, *grafana.ini by default*, which defines a set of service behaviors organized by section representing general administration and various content provider aspects of the Grafana service. These sections and settings can expressed within the hash, `grafana_config`, keyed by configuration section with dicts as values representing config section specifications (e.g. the path to store the sqlite3 database file -- activated by default). The following provides an overview and example configurations of each section for reference.
 
-###### :path
+##### :path
 
 `[grafana_config:] path: <key: value,...>` (**default**: see [section](https://grafana.com/docs/grafana/latest/installation/configuration/#paths) documentation)
 - specifies parameters that are related to where Grafana stores artifacts and variable data.
@@ -113,7 +113,7 @@ Grafana service configuration is contained within an INI file, *grafana.ini by d
       logs: /mnt/logs/grafana
   ```
 
-###### :server
+##### :server
 
 `[grafana_config:] server: <key: value,...>` (**default**: see [section](https://grafana.com/docs/grafana/latest/installation/configuration/#server) documentation)
 - specifies parameters that are related to how Grafana interfaces over the network
@@ -128,7 +128,7 @@ Grafana service configuration is contained within an INI file, *grafana.ini by d
       http_port: 3030
   ```
   
-###### :database
+##### :database
 
 `[grafana_config:] database: <key: value,...>` (**default**: see [section](https://grafana.com/docs/grafana/latest/installation/configuration/#database) documentation)
 - specifies parameters that control how grafana interfaces with one of the available backend datastores types (i.e. mysql, postgres and sqlite) 
@@ -146,7 +146,7 @@ Grafana service configuration is contained within an INI file, *grafana.ini by d
       password: PASSWORD
   ```
   
-###### :remote_cache
+##### :remote_cache
 
 `[grafana_config:] remote_cache: <key: value,...>` (**default**: see [section](https://grafana.com/docs/grafana/latest/installation/configuration/#remote-cache) documentation)
 - specifies parameters that control how grafana interfaces with one of the available remote-caching types (i.e. redis, memcached and database) 
@@ -161,7 +161,7 @@ Grafana service configuration is contained within an INI file, *grafana.ini by d
       connstr: addr=127.0.0.1:6379,pool_size=100,db=0,ssl=false
   ```
   
-###### :security
+##### :security
 
 `[grafana_config:] security: <key: value,...>` (**default**: see [section](https://grafana.com/docs/grafana/latest/installation/configuration/#security) documentation)
 - specifies parameters that manage Grafana user/organization authentication and authorization behavior 
@@ -177,7 +177,7 @@ Grafana service configuration is contained within an INI file, *grafana.ini by d
       login_remember_days: 7
 ```
 
-###### :users
+##### :users
 
 `[grafana_config:] users: <key: value,...>` (**default**: see [section](https://grafana.com/docs/grafana/latest/installation/configuration/#users) documentation)
 - specifies parameters that control Grafana user capabilities 
@@ -193,7 +193,7 @@ Grafana service configuration is contained within an INI file, *grafana.ini by d
       login_hint: THIS IS A HINT
 ```
 
-###### :auth
+##### :auth
 
 `[grafana_config:] auth: <key: value,...>` (**default**: see [section](https://grafana.com/docs/grafana/latest/installation/configuration/#auth) documentation)
 - specifies parameters that regulate user authorization capabilites. Grafana provides many ways to authenticate users and settings for each method are expressed within [auth.<method>] sections as appropriate, allowing for basic user authentication to Google & Github OAuth. 
@@ -214,7 +214,7 @@ Grafana service configuration is contained within an INI file, *grafana.ini by d
       api_url: https://api.github.com/user
 ```
 
-###### :dataproxy
+##### :dataproxy
 
 `[grafana_config:] dataproxy: <key: value,...>` (**default**: see [section](https://grafana.com/docs/grafana/latest/installation/configuration/#dataproxy) documentation)
 - specifies parameters that enable data proxy logging
@@ -231,7 +231,7 @@ Grafana service configuration is contained within an INI file, *grafana.ini by d
 ```
 
 
-###### :analytics
+##### :analytics
 
 `[grafana_config:] analytics: <key: value,...>` (**default**: see [section](https://grafana.com/docs/grafana/latest/installation/configuration/#analytics) documentation)
 - specifies parameters that activate usage statistics collection and reporting
@@ -247,7 +247,7 @@ Grafana service configuration is contained within an INI file, *grafana.ini by d
       check_for_updates: true
 ```
 
-###### :dashboards
+##### :dashboards
 
 `[grafana_config:] dashboards: <key: value,...>` (**default**: see [section](https://grafana.com/docs/grafana/latest/installation/configuration/#dashboards) documentation)
 - specifies parameters that regulate dashboard maintenance
@@ -261,7 +261,7 @@ Grafana service configuration is contained within an INI file, *grafana.ini by d
       versions_to_keep: 5
 ```
 
-###### :smtp
+##### :smtp
 
 `[grafana_config:] smtp: <key: value,...>` (**default**: see [section](https://grafana.com/docs/grafana/latest/installation/configuration/#smtp) documentation)
 - specifies email server settings
@@ -278,7 +278,7 @@ Grafana service configuration is contained within an INI file, *grafana.ini by d
       password: PASSWORD
 ```
 
-###### :log
+##### :log
 
 `[grafana_config:] log: <key: value,...>` (**default**: see [section](https://grafana.com/docs/grafana/latest/installation/configuration/#log) documentation)
 - specifies logging settings (e.g. log level and output channels)
@@ -293,7 +293,7 @@ Grafana service configuration is contained within an INI file, *grafana.ini by d
       level: debug
 ```
 
-###### :metrics
+##### :metrics
 
 `[grafana_config:] log: <key: value,...>` (**default**: see [section](https://grafana.com/docs/grafana/latest/installation/configuration/#metrics) documentation)
 - specifies metric settings
