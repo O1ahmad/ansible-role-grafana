@@ -312,240 +312,124 @@ Grafana service configuration is contained within an INI file, *grafana.ini by d
 
 #### Datasources
 
-File-based service discovery provides a more generic way to configure static targets and serves as an interface to plug in custom service discovery mechanisms. It reads a set of files containing a list of zero or more `<static_config>`s. Changes to all defined files are detected via disk watches and applied immediately. Files may be provided in YAML or JSON format. Only changes resulting in well-formed target groups are applied. See [here](https://prometheus.io/docs/prometheus/latest/configuration/configuration/#file_sd_config) for more details.
+Grafana supports many different storage backends for your time series data known as datasources. Each datsource can be configured in a set of `json|yml` configuration files under Grafana's `provisioning` directory (which can be adjusted within the `[paths]` grafana.ini section.
 
-`prometheus_file_sd: <list-of-dicts>` (**default**: [])
-- specifies prometheus file_sd configurations to render
+These datasoure configurations can expressed within the hash, `grafana_datasources`, which contains a list of data source structures for activation and another for deletion, keyed by `datasources` and `deleteDatasources`, respectively, with list of dicts as values, themselves, representing individual datsource specifications.  See [here](https://grafana.com/docs/grafana/latest/features/datasources/#supported-data-sources) for more details and a list of supported datasources.
 
-Using this role, file-based service discovery configuration settings can be expressed within the hash, `prometheus_file_sd`, which contains a list of dicts representing and encapsulating the path, name and configuration contents of a `yaml` or `json` file set to be loaded by prometheus for file-based discovery.
+`grafana_datasources: <list-of-dicts>` (**default**: [])
+- specifies grafana datasource definitions to render. See [here](https://grafana.com/grafana/plugins?orderBy=weight&direction=asc) for a reference to available datasources from the community and their respective options.
 
-`[prometheus_file_sd : <entry>:] name: <string>` (**default**: NONE - *required*)
-- name of file_sd file to render
+`grafana_datasources: name: <string>` (**default**: *required*)
+- name of grafana datasource file to render
 
-`[prometheus_file_sd : <entry>:] path: <string>` (**default**: `{{ install_dir }}/file_sd`)
-- path of file_sd file to render
+`grafana_datasources: <entry> : datasources: <list-of-dicts>` (**default**: `[]`)
+- list of data source definitions (based on supported list mentioned above) to render within the configuration file
 
-`[prometheus_file_sd : <entry>:] config: <list-of-dicts>` (**default**: NONE - *required*)
-- list of dictionaries representing settings indicating set of static targets to specify in file_sd file
-
-##### Example
-
- ```yaml
-  prometheus_file_sd:
-  - name: example-file.slow.json
-    config:
-    - targets: ["host1:1234"]
-      labels:
-        test-label: example-slow-file-sd
-  - name: file.yml
-    path: /etc/prometheus/file_sd
-    config:
-    - targets: ["host2:1234"]
-  ```
-
-  **NB:** An associated `file_sd` service discovery scrape_config is expected to be included within the `prometheus.yml` file for successful load.
-
-#### Rule files
-
-Prometheus supports two types of rules which may be configured and then evaluated at regular intervals: recording rules and alerting rules. Recording rules allow you to precompute frequently needed or computationally expensive expressions and save their result as a new set of time series.. Alerting rules allow you to define alert conditions based on Prometheus expression language expressions and to send notifications about firing alerts to an external service. See [here](https://prometheus.io/docs/prometheus/latest/configuration/recording_rules/) for more details.
-
-`prometheus_rule_files: <list-of-dicts>` (**default**: [])
-- specifies prometheus rule files to render
-
-Using this role, both recording and alerting rules can be expressed within the hash, `prometheus_rule_files`, which contains a list of dicts representing and encapsulating the path, name and configuration contents of a `yaml` or `json` file set to be loaded by prometheus for rule setting.
-
-`[prometheus_rule_files : <entry>:] name: <string>` (**default**: NONE - *required*)
-- name of rule file to render
-
-`[prometheus_rule_files : <entry>:] path: <string>` (**default**: `{{ install_dir }}/rules.d`)
-- path of rule file to render
-
-`[prometheus_rule_files : <entry>:] config: <list-of-dicts>` (**default**: NONE - *required*)
-- list of dictionaries representing settings indicating set of rule groups to specify in rule file
+`grafana_datasources: <entry> : deleteDatasources: <list-of-dicts>` (**default**: `[]`)
+- list of previously imported data source definitions to delete (based on supported list mentioned above) to render within the configuration file
 
 ##### Example
 
  ```yaml
-prometheus_rule_files:
-- name: example-rules.yml
-  config:
-    groups:
-    - name: recording rule example
-      rules:
-      - record: job:http_inprogress_requests:sum
-        expr: sum(http_inprogress_requests) by (job)
-- name: nondefault-path-example-rules.yml
-  path: /etc/prometheus/rules.d
-  config:
-    groups:
-    - name: alerting rule example
-      rules:
-      - alert: HighRequestLatency
-        expr: job:request_latency_seconds:mean5m{job="myjob"} > 0.5
-        for: 10m
-        labels:
-          severity: page
-        annotations:
-          summary: High request latency
+  grafana_datasources:
+  - name: elasticsearch_datasource
+    datasources:
+      - name: elasticsearch-logs
+        type: elasticsearch
+        access: proxy
+        database: "[logs-]YYYY.MM.DD"
+        url: http://localhost:9200
+        jsonData:
+          interval: Daily
+          timeField: "@timestamp"
+          esVersion: 70
+          logMessageField: message
+          logLevelField: fields.level
+      - name: prometheus_example
+        type: prometheus
+        access: proxy
+        url: http://localhost:9090
+      deleteDatasources:
+        - name: graphite-legacy
+          type: graphite
+          access: proxy
+          url: http://localhost:8080
+          jsonData:
+            graphiteVersion: "1.1"
   ```
 
-**NB:** An associated `rule_files` section is expected to be included within the `prometheus.yml` file for successful load.
+  **NB:** Datasources marked for deletion should have been previously imported.
 
 #### Dashboards
 
-Alertmanager service configuration can be expressed within the hash, `alertmanager_config`, which contains a set of key-value pairs representing one of a set of sections indicating various route, receiver, templating and alert inhibition configurations.
+Grafana supports many different storage backends for your time series data known as datasources. Each datsource can be configured in a set of `json|yml` configuration files under Grafana's `provisioning` directory (which can be adjusted within the `[paths]` grafana.ini section.
 
-The values of these keys are generally dicts or lists of dicts themselves containing a set of key-value pairs representing associated specifications/settings (e.g. the API URL to use for Slack notifications) for each section. The following provides an overview and example configurations of each for reference.
+Since version *5.0* Grafana has allowed adding one or more yaml config files in the provisioning/dashboards directory. Enabling Grafana to load dashboards from the local filesystem, this directory can contain a list of dashboards providers which indicate characteristics and various forms of meta data pertaining to the directory/file from which to load.
 
-###### :global
+These dashboard provider configurations can be expressed within the hash, `grafana_dashboards`, which is composed of a list of the aforementioned dashboard provider structures.  See [here](https://grafana.com/grafana/dashboards) for more details and a list of dashboards created by the community available for download and import.
 
-`[alertmanager_config:] global: <key: value,...>` (**default**: see `defaults/main.yml`)
-- specifies parameters that are valid and serve as defaults in all other configuration contexts. See [here](https://prometheus.io/docs/alerting/configuration/) for more details.
+`grafana_dashboards: <list-of-dicts>` (**default**: [])
+- specifies grafana dashboard provider definitions to render. See [here](https://grafana.com/docs/grafana/latest/administration/provisioning/#dashboards) for a reference of supported options.
 
-##### Example
+`grafana_dashboards: <entry> : name: <string>` (**default**: *required*)
+- name of grafana dashboard provider file to render
 
- ```yaml
-  alertmanager_config:
-    global:
-      # The smarthost and SMTP sender used for mail notifications.
-      smtp_smarthost: 'localhost:25'
-      smtp_from: 'alertmanager@example.org'
-      smtp_auth_username: 'alertmanager'
-      smtp_auth_password: 'password'
-      # The auth token for Hipchat.
-      hipchat_auth_token: '1234556789'
-      # Alternative host for Hipchat.
-      hipchat_api_url: 'https://hipchat.foobar.org/'
-  ```
+`grafana_dashboards: <entry> : apiVersion: <string>` (**default**: `[]`)
+- name of version of grafana dashboard provider file (useful for synchronization across instances)
 
-###### :route
-
-`[alertmanager_config:] route: <key: value,...>` (**default**: see `defaults/main.yml`)
-- defines a node in a routing tree and its children
-
-Every alert enters the routing tree at the configured top-level route, which must match all alerts (i.e. not have any configured matchers). It then traverses the child nodes. If continue is set to false, it stops after the first matching child. If continue is true on a matching node, the alert will continue matching against subsequent siblings. See [here](https://prometheus.io/docs/alerting/configuration/#route) for more details.
+`grafana_dashboards: <entry> : providers: <list-of-dicts>` (**default**: `[]`)
+- list of dashboard provider definitions to render within the configuration file
 
 ##### Example
 
- ```yaml
-  alertmanager_config:
-    route:
-      receiver: 'default-receiver'
-      group_wait: 30s
-      group_interval: 5m
-      repeat_interval: 4h
-      group_by: [cluster, alertname]
-      # All alerts that do not match the following child routes
-      # will remain at the root node and be dispatched to 'default-receiver'.
-      routes:
-        # All alerts with service=mysql or service=cassandra
-        # are dispatched to the database pager.
-      - receiver: 'database-pager'
-        group_wait: 10s
-        match_re:
-          service: mysql|cassandra
-      # All alerts with the team=frontend label match this sub-route.
-      # They are grouped by product and environment rather than cluster
-      # and alertname.
-      - receiver: 'frontend-pager'
-        group_by: [product, environment]
-        match:
-          team: frontend
-  ```
-
-###### :receivers
-
-`[alertmanager_config:] inhibit_rules: <list-of-dicts>` (**default**: see `defaults/main.yml`)
-- specifies a list of notification receivers
-
-Receivers are named configuration of one or more notification integrations. See [here](https://prometheus.io/docs/alerting/configuration/#receiver) for more details.
-
-##### Example
-
- ```yaml
-  alertmanager_config:
-    receivers:
-    - name: 'team-X-mails'
-      email_configs:
-      - to: 'team-X+alerts@example.org'
-      pagerduty_configs:
-      - service_key: <team-X-key>
-      hipchat_configs:
-      - auth_token: <auth_token>
-        room_id: 85
-        message_format: html
-        notify: true
-  ```
-
-###### :inhibit_rules
-
-`[alertmanager_config:] inhibit_rules: <list-of-dicts>` (**default**: see `defaults/main.yml`)
-- specifies a list of inhibition rules
-
-An inhibition rule mutes an alert (target) matching a set of matchers when an alert (source) exists that matches another set of matchers. See [here](https://prometheus.io/docs/alerting/configuration/#inhibit_rule) for more details.
-
-##### Example
-
- ```yaml
-  alertmanager_config:
-    inhibit_rules:
-    - source_match:
-        severity: 'critical'
-      target_match:
-        severity: 'warning'
-      # Apply inhibition if the alertname is the same.
-      equal: ['alertname', 'cluster', 'service']
-  ```
-
-###### :templates
-
-`[alertmanager_config:] templates: <list>` (**default**: see `defaults/main.yml`)
-- specifies files and directories from which notification templates are read
-
-The last component may use a wildcard matcher, e.g. `templates/*.tmpl`. See [here](https://prometheus.io/docs/alerting/notifications/) for a notification template reference and this [link](https://prometheus.io/docs/alerting/notification_examples/) for examples.
-
-##### Example
-
- ```yaml
-  alertmanager_config:
-    templates:
-    - '/etc/alertmanager/template/*.tmpl'
-  ```
+```yaml
+  grafana_dashboards:
+    - name: test-example
+      apiVersion: 2
+      providers:
+        - name: 'default'
+          orgId: 1
+          folder: ''
+          type: file
+          options:
+            path: "/var/lib/grafana/conf/provisioning/dashboards"
+ ```
 
 #### Notifiers
 
-Prometheus creates and sends alerts to the Alertmanager which then sends notifications out to different receivers based on their labels. The notifications sent to receivers are constructed via templates. The Alertmanager comes with default templates but they can also be customized. See [here](https://prometheus.io/docs/alerting/notifications/) for more details.
+Alert Notification Channels can be provisioned by adding one or more yaml config files in the provisioning/notifiers directory.
 
-`altermanager_templates: <list-of-dicts>` (**default**: [])
-- specifies `alertmanager` notification template configurations to render
+Each config file can be expressed within the `grafana_notifiers` hash containing the following top-level fields: - notifiers, a list of alert notifications that will be added or updated during start up. If the notification channel already exists, Grafana will update it to match the configuration file. - delete_notifiers, a list of alert notifications to be deleted before before inserting/updating those in the notifiers list.
 
-Using this role, alertmanager template configuration settings can be expressed within the hash, `alertmanager_templates`, which contains a list of dicts representing and encapsulating the path, name and configuration contents of a `tmpl` file set to be loaded by alertmanager.
+Provisioning looks up alert notifications by uid, and will update any existing notification with the provided uid.
 
-`[alertmanager_templates : <entry>:] name: <string>` (**default**: NONE - *required*)
-- name of template file to render
+`grafana_notifiers: <list-of-dicts>` (**default**: [])
+- specifies grafana notifiers definitions to render. See [here](https://grafana.com/docs/grafana/latest/administration/provisioning/#example-alert-notification-channels-config-file) for a reference of supported options.
 
-`[alertmanager_templates : <entry>:] path: <string>` (**default**: `{{ alertmgr_installdir }}/templates`)
-- path of template file to render
+`grafana_notifiers: <entry> : name: <string>` (**default**: *required*)
+- name of grafana alert notifier file to render
 
-`[alertmanager_templates : <entry>:] config: <list-of-dicts>` (**default**: NONE - *required*)
-- list of dictionaries representing settings indicating set of template configs to render
+`grafana_notifiers: <entry> : notifiers: <string>` (**default**: `[]`)
+- list of grafana alert notifiers to activate for a grafana instance
+
+`grafana_notifiers: <entry> : delete_notifiers: <list-of-dicts>` (**default**: `[]`)
+- list of grafana alert notifiers to delete from a grafana instance
 
 ##### Example
 
- ```yaml
-  alertmanager_templates:
-  - name: test
-    config:
-    - define: "myorg.test.guide"
-      template: 'https://internal.myorg.net/wiki/alerts/\{\{ .GroupLabels.app \}\}/\{\{ .GroupLabels.alertname \}\}'
-  - name: test2
-    path: /etc/alertmanager/templates
-    config:
-    - define: "myorg.test.text"
-      template: 'summary: \{\{ .CommonAnnotations.summary \}\}\ndescription: \{\{ .CommonAnnotations.description \}\}'
-  ```
-
-  **NB:** An associated `templates` config section is expected to be included within the `alertmanager.yml` file for successful load.
+```yaml
+  grafana_notifiers:
+    - name: slack-example
+      notifiers:
+        - name: example-org-slack
+          url: http://slack.example.org
+          recipient: team-channel
+        - name: example-org-pagerduty
+          integrationKey: PAGER_DUTY_KEY
+      delete_notifiers:
+        - name: example-org-email
+          addresses: user1@example.org,user2@example.org
+ ```
 
 #### Launch
 
