@@ -498,13 +498,13 @@ These dashboard provider configurations can be expressed within the hash, `grafa
 `[grafana_dashboards: <entry> : urls: <entry>:] name` <string> (**default**: `required`)
 - name of JSON file to store dashboard configuration/contents
 
-[`grafana_dashboards: <entry> : urls: <entry>:] src` <string> (**default**: `[]`)
+`[grafana_dashboards: <entry> : urls: <entry>:] src` <string> (**default**: `[]`)
 - URL or web address to locate and download the JSON file/content from
 
-[`grafana_dashboards: <entry> : urls: <entry>:] id` <integer> (**default**: `[]`)
+`[grafana_dashboards: <entry> : urls: <entry>:] id` <integer> (**default**: `[]`)
 - unique identifier for referencing the dashboard to download from Grafana's official community hub
 
-`grafana_dashboards: <entry> : urls: <entry> : dest` (**default**: `{{ provisioning_dir/dashboards`)
+`[grafana_dashboards: <entry> : urls: <entry>:] dest` (**default**: `{{ provisioning_dir }}/dashboards`)
 - location on host filesystem to store JSON dashboard definition
 
 **Note:** either one of `_.src` or `_.id` for dashboard identification and location is *required*.
