@@ -2,7 +2,7 @@
 
 apiVersion: {{ version | default(1) }}
 
-{% if providers is defined %}
+{% if providers is defined and providers|length > 0 %}
 providers:
 {{ providers | to_nice_yaml(indent=2) }}
 {% endif %}

@@ -17,6 +17,6 @@
     mode: 0644
   vars:
     version: "{{ item.version | default(1) }}"
-    providers: "{{ item.providers | default(omit) }}"
+    providers: "{{ item.providers | default([]) }}"
   loop: "{{ grafana_dashboards }}"
   when: grafana_dashboards is defined and grafana_dashboards | length > 0

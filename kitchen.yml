@@ -142,3 +142,9 @@ suites:
     verifier:
       inspec_tests:
         - path: test/integration/uninstall
+  - name: explore
+    provisioner:
+      playbook: test/integration/explore/default_playbook.yml
+    verifier:
+      inspec_tests:
+        - path: test/integration/explore

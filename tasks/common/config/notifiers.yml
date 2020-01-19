@@ -16,7 +16,7 @@
     group: "{{ grafana_user }}"
     mode: 0644
   vars:
-    notifiers: "{{ item.notifiers | default(omit) }}"
-    delete_notifiers: "{{ item.delete_notifiers | default(omit) }}"
+    notifiers: "{{ item.notifiers | default([]) }}"
+    delete_notifiers: "{{ item.delete_notifiers | default([]) }}"
   loop: "{{ grafana_notifiers }}"
   when: grafana_notifiers is defined and grafana_notifiers | length > 0
