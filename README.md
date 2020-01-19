@@ -131,7 +131,7 @@ Grafana service configuration is contained within an INI file, *grafana.ini by d
 ##### :database
 
 `[grafana_config:] database: <key: value,...>` (**default**: see [section](https://grafana.com/docs/grafana/latest/installation/configuration/#database) documentation)
-- specifies parameters that control how grafana interfaces with one of the available backend datastores types (i.e. *mysql, postgres and sqlite*)
+- specifies parameters that control how grafana interfaces with one of the available backend datastore types (i.e. *mysql, postgres and sqlite*)
 
 ##### Example
 
