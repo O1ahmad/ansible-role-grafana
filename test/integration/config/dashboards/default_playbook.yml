@@ -12,10 +12,15 @@
             provisioning: /var/lib/grafana/provisioning
         grafana_dashboards:
           - name: test-example
+            urls:
+              - name: node_exporter_prometheus
+                src: https://grafana.com/api/dashboards/11173/revisions/1/download
+              - name: geth_server
+                id: '6976'
             providers:
-              - name: 'default'
+              - name: 'default-provider'
                 orgId: 1
-                folder: ''
+                folder: 'default'
                 type: file
                 options:
                   path: "/var/lib/grafana/conf/provisioning/dashboards"

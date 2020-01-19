@@ -127,11 +127,11 @@ Grafana service configuration is contained within an INI file, *grafana.ini by d
       http_addr: 127.0.0.1
       http_port: 3030
   ```
-  
+
 ##### :database
 
 `[grafana_config:] database: <key: value,...>` (**default**: see [section](https://grafana.com/docs/grafana/latest/installation/configuration/#database) documentation)
-- specifies parameters that control how grafana interfaces with one of the available backend datastores types (i.e. *mysql, postgres and sqlite*) 
+- specifies parameters that control how grafana interfaces with one of the available backend datastores types (i.e. *mysql, postgres and sqlite*)
 
 ##### Example
 
@@ -145,11 +145,11 @@ Grafana service configuration is contained within an INI file, *grafana.ini by d
       user: mysql-admin
       password: PASSWORD
   ```
-  
+
 ##### :remote_cache
 
 `[grafana_config:] remote_cache: <key: value,...>` (**default**: see [section](https://grafana.com/docs/grafana/latest/installation/configuration/#remote-cache) documentation)
-- specifies parameters that control how grafana interfaces with one of the available remote-caching types (i.e. *redis, memcached and database*) 
+- specifies parameters that control how grafana interfaces with one of the available remote-caching types (i.e. *redis, memcached and database*)
 
 ##### Example
 
@@ -160,11 +160,11 @@ Grafana service configuration is contained within an INI file, *grafana.ini by d
       type: redis
       connstr: addr=127.0.0.1:6379,pool_size=100,db=0,ssl=false
   ```
-  
+
 ##### :security
 
 `[grafana_config:] security: <key: value,...>` (**default**: see [section](https://grafana.com/docs/grafana/latest/installation/configuration/#security) documentation)
-- specifies parameters that manage Grafana user/organization authentication and authorization behavior 
+- specifies parameters that manage Grafana user/organization authentication and authorization behavior
 
 ##### Example
 
@@ -180,7 +180,7 @@ Grafana service configuration is contained within an INI file, *grafana.ini by d
 ##### :users
 
 `[grafana_config:] users: <key: value,...>` (**default**: see [section](https://grafana.com/docs/grafana/latest/installation/configuration/#users) documentation)
-- specifies parameters that control Grafana user capabilities 
+- specifies parameters that control Grafana user capabilities
 
 ##### Example
 
@@ -198,7 +198,7 @@ Grafana service configuration is contained within an INI file, *grafana.ini by d
 `[grafana_config:] auth: <key: value,...>` (**default**: see [section](https://grafana.com/docs/grafana/latest/installation/configuration/#auth) documentation)
 - specifies parameters that regulate user authorization capabilites
 
-Grafana provides multiple methods to authenticate users and settings for each method are expressed within [auth.<method>] sections as appropriate, allowing for authentication ranging from basic user auth to Google & Github OAuth. 
+Grafana provides multiple methods to authenticate users and settings for each method are expressed within [auth.<method>] sections as appropriate, allowing for authentication ranging from basic user auth to Google & Github OAuth.
 
 ##### Example
 
@@ -495,12 +495,31 @@ These dashboard provider configurations can be expressed within the hash, `grafa
 `grafana_dashboards: <entry> : providers: <list-of-dicts>` (**default**: `[]`)
 - list of dashboard provider definitions to render within the configuration file
 
+`[grafana_dashboards: <entry> : urls: <entry>:] name` <string> (**default**: `required`)
+- name of JSON file to store dashboard configuration/contents
+
+[`grafana_dashboards: <entry> : urls: <entry>:] src` <string> (**default**: `[]`)
+- URL or web address to locate and download the JSON file/content from
+
+[`grafana_dashboards: <entry> : urls: <entry>:] id` <integer> (**default**: `[]`)
+- unique identifier for referencing the dashboard to download from Grafana's official community hub
+
+`grafana_dashboards: <entry> : urls: <entry> : dest` (**default**: `{{ provisioning_dir/dashboards`)
+- location on host filesystem to store JSON dashboard definition
+
+**Note:** either one of `_.src` or `_.id` for dashboard identification and location is *required*.
+
 ##### Example
 
 ```yaml
   grafana_dashboards:
     - name: test-example
       apiVersion: 2
+      urls:
+        - name: node_exporter_prometheus
+          src: https://grafana.com/api/dashboards/11173/revisions/1/download
+        - name: geth_server
+          id: '6976'
       providers:
         - name: 'default-example'
           folder: 'default'
