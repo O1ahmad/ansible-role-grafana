@@ -96,7 +96,7 @@ Each configuration can be expressed within the following variables in order to c
 
 Grafana service configuration is contained within an INI file, *grafana.ini by default*, which defines a set of service behaviors organized by section representing general administration and various content provider aspects of the Grafana service. These sections and settings can expressed within the hash, `grafana_config`, keyed by configuration section with dicts as values representing config section specifications (e.g. the path to store the sqlite3 database file -- activated by default). The following provides an overview and example configurations of each section for reference.
 
-##### :path
+##### :paths
 
 `[grafana_config:] path: <key: value,...>` (**default**: see [section](https://grafana.com/docs/grafana/latest/installation/configuration/#paths) documentation)
 - specifies parameters that are related to where Grafana stores artifacts and variable data
