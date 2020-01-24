@@ -1,2 +1,4 @@
 ---
 - src: 0x0i.systemd
+- src: 0x0i.prometheus
+- src: 0x0i.elasticsearch

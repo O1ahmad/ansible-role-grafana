@@ -1,0 +1,31 @@
+---
+- name: Default playbook for testing
+  hosts: test-kitchen
+  roles:
+    - role: 0x0i.prometheus
+      vars:
+        managed_services: ['prometheus']
+        prometheus_config:
+          scrape_configs:
+            - job_name: prometheus
+              static_configs:
+                - targets: ['localhost:9090']
+            - job_name: node_exporter
+              static_configs:
+                - targets: ['localhost:9110']
+        prometheus_exporters:
+          - name: node_exporter
+            url: https://github.com/prometheus/node_exporter/releases/download/v0.18.1/node_exporter-0.18.1.linux-amd64.tar.gz
+            extra_args:
+              - '--web.listen-address=0.0.0.0:9110'
+              - '--log.level=debug'
+    - role: ansible-role-grafana
+      vars:
+        install_type: archive
+        provision_configs: ['datasources']
+        grafana_datasources:
+          - name: prometheus_datasource
+            datasources:
+              - name: prometheus_metrics
+                type: prometheus
+                url: http://localhost:9090

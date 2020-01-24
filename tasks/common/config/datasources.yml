@@ -17,7 +17,7 @@
     mode: 0644
   vars:
     version: "{{ item.version | default(1) }}"
-    datasources: "{{ item.datasources | default(omit) }}"
-    deleteDatasources: "{{ item.deleteDatasources | default(omit) }}"
+    datasources: "{{ item.datasources | default([]) }}"
+    deleteDatasources: "{{ item.deleteDatasources| default([]) }}"
   loop: "{{ grafana_datasources }}"
   when: grafana_datasources is defined and grafana_datasources | length > 0
