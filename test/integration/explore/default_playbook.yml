@@ -22,10 +22,24 @@
     - role: ansible-role-grafana
       vars:
         install_type: archive
-        provision_configs: ['datasources']
+        provision_configs: ['datasources', 'dashboards']
         grafana_datasources:
           - name: prometheus_datasource
             datasources:
               - name: prometheus_metrics
                 type: prometheus
                 url: http://localhost:9090
+        grafana_dashboards:
+          - name: node_exporter_default
+            urls:
+              - name: exporter_prometheus
+                src: https://grafana.com/api/dashboards/11173/revisions/1/download
+              - name: geth_server
+                id: '6976'
+            providers:
+              - name: 'default-exporters'
+                orgId: 1
+                folder: 'default'
+                type: file
+                options:
+                  path: "/opt/grafana/conf/provisioning/dashboards"
