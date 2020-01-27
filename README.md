@@ -5,6 +5,7 @@ Ansible Role :rainbow: :bar_chart: Grafana
 [![Galaxy Role](https://img.shields.io/ansible/role/45672.svg)](https://galaxy.ansible.com/0x0I/grafana)
 [![Downloads](https://img.shields.io/ansible/role/d/45672.svg)](https://galaxy.ansible.com/0x0I/grafana)
 [![Build Status](https://travis-ci.org/0x0I/ansible-role-grafana.svg?branch=master)](https://travis-ci.org/0x0I/ansible-role-grafana)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 **Table of Contents**
   - [Supported Platforms](#supported-platforms)
@@ -641,7 +642,7 @@ launch Grafana in debug mode for troubleshooting purposes and *only* output to c
 License
 -------
 
-Apache, BSD, MIT
+MIT
 
 Author Information
 ------------------
