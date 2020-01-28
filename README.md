@@ -569,6 +569,26 @@ Provisioning looks up alert notifications by uid, and will update any existing n
         - name: example-org-email
           addresses: user1@example.org,user2@example.org
  ```
+ 
+ #### Plugins
+ 
+ Grafana supports data source, panel, and app plugins. This role provides a list variable, `grafana_plugins`, which supports specification of a list of hashes detailing the name and version of the plugin to download. For more information about installing plugins, refer to Grafana's official plugins [documentation](https://grafana.com/docs/grafana/latest/plugins/installation/) and see [here](https://grafana.com/grafana/plugins?orderBy=weight&direction=asc) a reference to the  plugins available for download.
+ 
+ `[grafana_plugins: <entry>:] name:` <string> (**default**: *required*)
+- name of the Grafana plugin to download
+
+ `[grafana_plugins: <entry>:] name:` <string> (**default**: `latest)
+- version of the Grafana plugin to download
+  
+ ##### Example
+
+```yaml
+  grafana_plugins:
+    - name: petrslavotinek-carpetplot-panel
+      version: 0.1.1
+    - name: briangann-gauge-panel
+      # version: latest
+ ```
 
 #### Launch
 
