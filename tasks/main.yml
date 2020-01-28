@@ -4,7 +4,7 @@
   tags:
     - preflight
 
-- name: perform common installation tasks
+- name: Perform common installation tasks
   include_tasks: "common/install.yml"
   tags:
     - install
