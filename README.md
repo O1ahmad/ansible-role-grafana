@@ -572,7 +572,7 @@ Provisioning looks up alert notifications by uid, and will update any existing n
  
  #### Plugins
  
- Grafana supports data source, panel, and app plugins. This role provides a list variable, `grafana_plugins`, which supports specification of a list of hashes detailing the name and version of the plugin to download. For more information about installing plugins, refer to Grafana's official plugins [documentation](https://grafana.com/docs/grafana/latest/plugins/installation/) and see [here](https://grafana.com/grafana/plugins?orderBy=weight&direction=asc) a reference to the  plugins available for download.
+ Grafana supports data source, panel, and app plugins. This role provides a list variable, `grafana_plugins`, which supports specification of a list of hashes detailing the name and version of the plugin to download. For more information about installing plugins, refer to Grafana's official plugins [documentation](https://grafana.com/docs/grafana/latest/plugins/installation/) and see [here](https://grafana.com/grafana/plugins?orderBy=weight&direction=asc) for a reference to available plugins.
  
  `[grafana_plugins: <entry>:] name:` <string> (**default**: *required*)
 - name of the Grafana plugin to download
