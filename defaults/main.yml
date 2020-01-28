@@ -32,6 +32,8 @@ _dashboard_base_url: https://grafana.com/api/dashboards
 grafana_notifiers: []
 notifiers_directory: "{{ install_dir }}/provisioning/notifiers"
 
+grafana_plugins: []
+
 _service_name: grafana-server
 custom_unit_properties: {}
 extra_run_args: []

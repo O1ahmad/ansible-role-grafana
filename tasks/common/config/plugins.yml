@@ -1,0 +1,32 @@
+---
+- name: Ensure existence of plugins dir
+  become: true
+  file:
+    path: "{{ _plugins_dir }}"
+    owner: "{{ grafana_user }}"
+    group: "{{ grafana_user }}"
+    state: directory
+
+- name: Install/update grafana plugins
+  become: true
+  grafana_plugin:
+    name: "{{ item.name }}"
+    version: "{{ item.version | default('latest') }}"
+    grafana_plugins_dir: "{{ _plugins_dir }}"
+    state: present
+  with_items: "{{ grafana_plugins }}"
+  environment:
+    PATH: /usr/local/bin:{{ install_dir }}/bin
+  tags:
+    - config
+    - plugins
+
+- name: Ensure proper permissions of plugins dir
+  become: true
+  file:
+    path: "{{ _plugins_dir }}"
+    owner: "{{ grafana_user }}"
+    group: "{{ grafana_user }}"
+    state: directory
+    mode: 0755
+    recurse: true
