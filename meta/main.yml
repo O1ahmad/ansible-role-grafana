@@ -4,8 +4,8 @@ galaxy_info:
   author: Ahmad Wilson
   role_name: grafana
   description: Grafana - an analytics and monitoring observability platform
-  company: "O1.io"
-  license: license (Apache, BSD, MIT)
+  company: "O1.IO"
+  license: license (MIT)
   min_ansible_version: 2.6
   platforms:
     - name: EL
