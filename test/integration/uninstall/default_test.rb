@@ -1,4 +1,4 @@
-title "Prometheus service uninstall test suite"
+title "Grafana uninstall integration tests"
 
 describe service('grafana') do
   it { should_not be_installed }

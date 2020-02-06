@@ -1,4 +1,4 @@
-title "Provisioned datasources integration test-suite"
+title "Grafana datasources configuration integration tests"
 
 describe file('/opt/grafana/conf/provisioning/datasources/test-example.yml') do
   it { should exist }

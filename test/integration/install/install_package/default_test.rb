@@ -1,4 +1,4 @@
-title "Default role integrated test file"
+title "Grafana package installation integration tests"
 
 describe user('grafana') do
   it { should exist }

@@ -1,4 +1,4 @@
-title "Dashboards provisioning configuration test-suite"
+title "Grafana dashboards configuration integration tests"
 
 describe file('/var/lib/grafana/provisioning/dashboards/test-example.yml') do
   it { should exist }

@@ -1,18 +1,18 @@
 ---
-- name: Default playbook for testing
+- name: Grafana service configuration integration test playbook
   hosts: test-kitchen
   roles:
-    - ansible-role-grafana
-  vars:
-    install_type: archive
-    provision_configs: ['grafana_ini']
-    grafana_config:
-      instance_name: test
-      http-port: 3003
-      log:
-        mode: console file
-        level: debug
-      log.console:
-        format: json
-      log.file:
-        format: json
+    - role: ansible-role-grafana
+      vars:
+        install_type: archive
+        provision_configs: ['grafana_ini']
+        grafana_config:
+          instance_name: test
+          http-port: 3003
+          log:
+            mode: console file
+            level: debug
+          log.console:
+            format: json
+          log.file:
+            format: json

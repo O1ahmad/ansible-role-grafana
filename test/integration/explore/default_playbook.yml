@@ -1,5 +1,5 @@
 ---
-- name: Default playbook for testing
+- name: Grafana exploratory integration test playbook
   hosts: test-kitchen
   roles:
     - role: 0x0i.prometheus

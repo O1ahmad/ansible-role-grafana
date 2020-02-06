@@ -1,15 +1,15 @@
 ---
-- name: Default playbook for testing
+- name: Grafana plugins installation integration test playbook
   hosts: test-kitchen
   roles:
-    - ansible-role-grafana
-  vars:
-    install_type: archive
-    provision_configs: ['plugins']
-    grafana_config:
-      paths:
-        plugins: /mnt/data/grafana/plugins
-    grafana_plugins:
-      - name: petrslavotinek-carpetplot-panel
-        version: 0.1.1
-      - name: briangann-gauge-panel
+    - role: ansible-role-grafana
+      vars:
+        install_type: archive
+        provision_configs: ['plugins']
+        grafana_config:
+          paths:
+            plugins: /mnt/data/grafana/plugins
+        grafana_plugins:
+          - name: petrslavotinek-carpetplot-panel
+            version: 0.1.1
+          - name: briangann-gauge-panel

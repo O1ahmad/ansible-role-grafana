@@ -1,4 +1,4 @@
-title "Grafana plugins installation test-suite"
+title "Grafana plugins installation integration tests"
 
 describe directory('/mnt/data/grafana/plugins') do
   it { should exist }
