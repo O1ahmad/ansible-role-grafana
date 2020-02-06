@@ -1,26 +1,26 @@
 ---
-- name: Default playbook for testing
+- name: Grafana notifiers configuration integration test playbook
   hosts: test-kitchen
   roles:
-    - ansible-role-grafana
-  vars:
-    install_type: archive
-    provision_configs: ['notifiers']
-    grafana_notifiers:
-      - name: test-example
-        notifiers:
-          - name: test-slack
+    - role: ansible-role-grafana
+      vars:
+        install_type: archive
+        provision_configs: ['notifiers']
+        grafana_notifiers:
+          - name: test-example
             notifiers:
-            type: slack
-            is_default: true
-            uid: notifier1
-            settings:
-              uploadImage: true
-              url: https://slack.com
-          - name: test-email
-            type: email
-            uid: notifier2
-            settings:
-              addresses: example1234@example.com
-        delete_notifiers:
-          - name: default-slack
+              - name: test-slack
+                notifiers:
+                type: slack
+                is_default: true
+                uid: notifier1
+                settings:
+                  uploadImage: true
+                  url: https://slack.com
+              - name: test-email
+                type: email
+                uid: notifier2
+                settings:
+                  addresses: example1234@example.com
+            delete_notifiers:
+              - name: default-slack

@@ -1,5 +1,5 @@
 ---
-- name: Default playbook for testing
+- name: Grafana uninstall integration test playbook
   hosts: test-kitchen
   roles:
     - role: ansible-role-grafana

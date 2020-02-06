@@ -1,4 +1,4 @@
-title "Default role integrated test file"
+title "Grafana service configuration integration tests"
 
 describe file('/etc/grafana/grafana.ini') do
   it { should exist }

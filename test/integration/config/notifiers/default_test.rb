@@ -1,4 +1,4 @@
-title "Notifiers provisioning integrated test-suite"
+title "Grafana notifiers configuration integration tests"
 
 describe file('/opt/grafana/conf/provisioning/notifiers/test-example.yml') do
   it { should exist }

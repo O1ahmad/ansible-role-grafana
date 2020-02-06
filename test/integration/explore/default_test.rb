@@ -1,1 +1,1 @@
-title "Exploratory integration test suite"
+title "Exploratory integration tests"

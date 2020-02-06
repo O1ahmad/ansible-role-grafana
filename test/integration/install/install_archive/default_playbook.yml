@@ -1,7 +1,7 @@
 ---
-- name: Default playbook for testing
+- name: Grafana archive installation integration test playbook
   hosts: test-kitchen
   roles:
-    - ansible-role-grafana
-  vars:
-    install_type: archive
+    - role: ansible-role-grafana
+      vars:
+        install_type: archive

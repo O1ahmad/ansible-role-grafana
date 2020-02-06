@@ -1,4 +1,4 @@
-title "Degfault grafana launch integration test-suite"
+title "Grafana service launch integration tests"
 
 describe service('grafana-server') do
   it { should be_enabled }
