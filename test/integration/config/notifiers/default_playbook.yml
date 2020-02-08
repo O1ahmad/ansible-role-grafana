@@ -6,6 +6,8 @@
       vars:
         install_type: archive
         provision_configs: ['notifiers']
+        grafana_config:
+          instance_name: test
         grafana_notifiers:
           - name: test-example
             notifiers:
@@ -24,3 +26,4 @@
                   addresses: example1234@example.com
             delete_notifiers:
               - name: default-slack
+                uid: notifier3
