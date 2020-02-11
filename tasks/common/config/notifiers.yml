@@ -9,6 +9,7 @@
 
 - name: Render Grafana provisioned notifiers configuration
   become: true
+  when: grafana_notifiers is defined and grafana_notifiers | length > 0
   template:
     src: notifiers.j2
     dest: "{{ _provisioning_dir }}/notifiers/{{ item.name }}.yml"
@@ -19,4 +20,3 @@
     notifiers: "{{ item.notifiers | default([]) }}"
     delete_notifiers: "{{ item.delete_notifiers | default([]) }}"
   loop: "{{ grafana_notifiers }}"
-  when: grafana_notifiers is defined and grafana_notifiers | length > 0

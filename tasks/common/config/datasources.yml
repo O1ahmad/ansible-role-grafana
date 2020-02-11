@@ -9,6 +9,7 @@
 
 - name: Render Grafana datasources configuration
   become: true
+  when: grafana_datasources is defined and grafana_datasources | length > 0
   template:
     src: datasources.j2
     dest: "{{ _provisioning_dir }}/datasources/{{ item.name }}.yml"
@@ -20,4 +21,3 @@
     datasources: "{{ item.datasources | default([]) }}"
     deleteDatasources: "{{ item.deleteDatasources| default([]) }}"
   loop: "{{ grafana_datasources }}"
-  when: grafana_datasources is defined and grafana_datasources | length > 0

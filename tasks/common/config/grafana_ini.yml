@@ -1,6 +1,7 @@
 ---
 - name: Copy Grafana configuration in place
   become: true
+  when: grafana_config is defined and grafana_config.keys()|length > 0
   template:
     src: "{{ grafana_config_file }}.j2"
     dest: "{{ config_dir }}/{{ grafana_config_file }}"
@@ -9,6 +10,5 @@
     mode: 0644
   vars:
     conf: "{{ grafana_config }}"
-  when: grafana_config is defined and grafana_config.keys()|length > 0
   tags:
     - config
