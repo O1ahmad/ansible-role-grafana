@@ -9,6 +9,7 @@
 
 - name: Render Grafana dashboard configuration
   become: true
+  when: grafana_dashboards is defined and grafana_dashboards | length > 0
   template:
     src: dashboards.j2
     dest: "{{ _provisioning_dir }}/dashboards/{{ item.name }}.yml"
@@ -19,4 +20,3 @@
     version: "{{ item.version | default(1) }}"
     providers: "{{ item.providers | default([]) }}"
   loop: "{{ grafana_dashboards }}"
-  when: grafana_dashboards is defined and grafana_dashboards | length > 0

@@ -1,6 +1,7 @@
 ---
 - name: Download Grafana dashboards
   become: true
+  when: provider.urls is defined and provider.urls | length > 0
   get_url:
     url: "{{ download.src if download.src is defined else _dashboard_base_url + '/' + download.id }}"
     dest: "{{ download.dest | default(_provisioning_dir) }}/dashboards/{{ download.name }}.json"
@@ -10,7 +11,6 @@
   loop: "{{ provider.urls }}"
   loop_control:
     loop_var: download
-  when: provider.urls is defined and provider.urls | length > 0
   tags:
     - install
     - dashboards

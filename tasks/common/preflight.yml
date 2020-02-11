@@ -1,10 +1,10 @@
 ---
 - name: Fail on unsupported system architectures
-  fail:
-    msg: "Sorry grafana doesn't support {{ ansible_architecture }} on this OS family ({{ ansible_os_family }}). Exiting."
   when:
     - ansible_architecture != "x86_64"
     - not ( ansible_architecture in ['armv6l', 'armv7l'] and ansible_os_family == 'Debian' )
+  fail:
+    msg: "Sorry grafana doesn't support {{ ansible_architecture }} on this OS family ({{ ansible_os_family }}). Exiting."
   tags:
     - preflight
     - assert
@@ -28,16 +28,16 @@
     - preflight
 
 - name: Set Grafana logs directory based on config
+  when: grafana_config.paths is defined and grafana_config.paths.logs is defined and grafana_config.paths.logs|length > 0
   set_fact:
     _logs_dir: "{{ grafana_config.paths.logs }}"
-  when: grafana_config.paths.logs is defined and grafana_config.paths.logs|length > 0
   tags:
     - preflight
 
 - name: Set Grafana sqlite3 data directory based on config
+  when: grafana_config.paths is defined and grafana_config.paths.data is defined and grafana_config.paths.data|length > 0
   set_fact:
     _data_dir: "{{ grafana_config.paths.data }}"
-  when: grafana_config.paths.data is defined and grafana_config.paths.data|length > 0
   tags:
     - preflight
 
@@ -48,16 +48,16 @@
     - preflight
 
 - name: Set Grafana provisioning directory based on config
+  when: grafana_config.paths is defined and grafana_config.paths.provisioning is defined and grafana_config.paths.provisioning|length > 0
   set_fact:
     _provisioning_dir: "{{ grafana_config.paths.provisioning }}"
-  when: grafana_config.paths.provisioning is defined and grafana_config.paths.provisioning|length > 0
   tags:
     - preflight
 
 - name: Set Grafana plugins directory based on config
+  when: grafana_config.paths is defined and grafana_config.paths.plugins is defined and grafana_config.paths.plugins|length > 0
   set_fact:
     _plugins_dir: "{{ grafana_config.paths.plugins }}"
-  when: grafana_config.paths.plugins is defined and grafana_config.paths.plugins|length > 0
   tags:
     - preflight
 
@@ -66,6 +66,7 @@
     config_spec: "{{ '--config ' + config_dir + '/' + grafana_config_file if grafana_config.keys()|length > 0 else '' }}"
 
 - name: Set unit [Service] configuration
+  when: install_type != "package"
   set_fact:
     default_service_unit:
       ExecStart: "{{ install_dir }}/bin/grafana-server {{ config_spec }} {{ extra_run_args|join(' ') }}"
@@ -74,20 +75,19 @@
       WorkingDirectory: "{{ install_dir }}"
       StandardOutput: journal
       StandardError: inherit
-  when: install_type != "package"
   tags:
     - preflight
 
 - name: Check for uninstall signal
+  when: perform_uninstall
   block:
     - name: Broadcast uninstall signal
       command: /bin/true
-      notify:
-        - Uninstall service
-
+      notify: Uninstall service
+  always:
+    - name: Flush handlers
+      meta: flush_handlers
     - name: End play following uninstallation
       meta: end_play
-  when: perform_uninstall
-  ignore_errors: true
   tags:
     - preflight

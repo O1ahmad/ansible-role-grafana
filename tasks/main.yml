@@ -24,11 +24,6 @@
   tags:
     - config
 
-- name: Include common launch tasks
-  include_tasks: "common/launch.yml"
-  tags:
-    - launch
-
 - name: Download and install Grafana provider dashboards
   include_tasks: "common/install/dashboards.yml"
   with_items: "{{ grafana_dashboards }}"
@@ -37,3 +32,8 @@
   tags:
     - install
     - dashboard
+
+- name: Include common launch tasks
+  include_tasks: "common/launch.yml"
+  tags:
+    - launch
