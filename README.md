@@ -627,7 +627,7 @@ default example:
 ```
 - hosts: all
   roles:
-  - role: 0xOI.grafana
+  - role: 0x0I.grafana
 ```
 
 install specific version of Grafana bits:
@@ -644,7 +644,7 @@ adust Grafana installation, configuration and data directories:
 ```
 - hosts: all
   roles:
-  - role: 0xOI.grafana
+  - role: 0x0I.grafana
     vars:
       install_dir: /usr/local
       config_dir: /etc/grafana
@@ -655,7 +655,7 @@ launch Grafana in debug mode for troubleshooting purposes and *only* output to c
 ```
 - hosts: all
   roles:
-  - role: 0xOI.grafana
+  - role: 0x0I.grafana
     vars:
       grafana_config:
         log:
