@@ -3,9 +3,10 @@
 Ansible Role :rainbow: :bar_chart: Grafana
 =========
 [![Galaxy Role](https://img.shields.io/ansible/role/45672.svg)](https://galaxy.ansible.com/0x0I/grafana)
-[![Downloads](https://img.shields.io/ansible/role/d/45672.svg)](https://galaxy.ansible.com/0x0I/grafana)
+![GitHub release (latest by date)](https://img.shields.io/github/v/release/0x0I/ansible-role-grafana?color=yellow)
+[![Downloads](https://img.shields.io/ansible/role/d/45672.svg?color=lightgrey)](https://galaxy.ansible.com/0x0I/grafana)
 [![Build Status](https://travis-ci.org/0x0I/ansible-role-grafana.svg?branch=master)](https://travis-ci.org/0x0I/ansible-role-grafana)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![License: MIT](https://img.shields.io/badge/License-MIT-blueviolet.svg)](https://opensource.org/licenses/MIT)
 
 **Table of Contents**
   - [Supported Platforms](#supported-platforms)
@@ -95,7 +96,9 @@ Each configuration can be expressed within the following variables in order to c
 
 #### Grafana Service configuration
 
-Grafana service configuration is contained within an INI file, *grafana.ini by default*, which defines a set of service behaviors organized by section representing general administration and various content provider aspects of the Grafana service. These sections and settings can expressed within the hash, `grafana_config`, keyed by configuration section with dicts as values representing config section specifications (e.g. the path to store the sqlite3 database file -- activated by default). The following provides an overview and example configurations of each section for reference.
+Grafana service configuration is contained within an INI file, *grafana.ini by default*, which defines a set of service behaviors organized by section representing general administration and various content provider aspects of the Grafana service.
+
+These sections and settings can expressed within the hash, `grafana_config`, keyed by configuration section with dicts as values representing config section specifications (e.g. the path to store the sqlite3 database file -- activated by default). The following provides an overview and example configurations of each section for reference.
 
 ##### :paths
 
@@ -252,7 +255,7 @@ Grafana provides multiple methods to authenticate users and settings for each me
 ##### :dashboards
 
 `[grafana_config:] dashboards: <key: value,...>` (**default**: see [section](https://grafana.com/docs/grafana/latest/installation/configuration/#dashboards) documentation)
-- specifies parameters that regulates Grafana's dashboard maintenance policy
+- specifies parameters that regulate Grafana's dashboard maintenance policy
 
 ##### Example
 
@@ -332,7 +335,7 @@ Grafana provides multiple methods to authenticate users and settings for each me
 `[grafana_config:] external_image_storage: <key: value,...>` (**default**: see [section](https://grafana.com/docs/grafana/latest/installation/configuration/#external-image-storage) documentation)
 - specifies settings for controlling how images should be made publicly available for sharing on services like slack
 
-Grafana supports several backend storage providers for which individual configurations can be expressed within [external_image_storage.<provider>] sections as appropriate, enabling remote storage to services like `s3, gcs, azure blob and local storage`.
+Grafana supports several backend storage providers for which individual configurations can be expressed within [external_image_storage.<provider>] sections as appropriate, enabling remote storage on services like `s3, gcs, azure blob and local storage`.
 
 ##### Example
 
@@ -432,7 +435,7 @@ Grafana supports several backend storage providers for which individual configur
 
 #### Datasources
 
-Grafana supports many different storage backends for your time series data known as datasources. Each datsource can be configured in a set of `json|yml` configuration files under Grafana's `provisioning` directory, which can be adjusted within the `[paths]` grafana.ini section.
+Grafana supports many different storage backends for your time series data known as datasources. Each datasource can be configured in a set of `json|yml` configuration files under Grafana's `provisioning` directory, which can be adjusted within the `[paths]` grafana.ini section.
 
 These datasoure configurations can expressed within the hash, `grafana_datasources`. This hash contains a list of data source structures for activation and another for deletion, keyed by `datasources` and `deleteDatasources`, respectively. The values themselves consist of a list of dicts representing individual datasource specifications.  See [here](https://grafana.com/docs/grafana/latest/features/datasources/#supported-data-sources) for more details and a list of supported datasources.
 
@@ -577,7 +580,7 @@ Provisioning looks up alert notifications by uid, and will update any existing n
  `[grafana_plugins: <entry>:] name:` <string> (**default**: *required*)
 - name of the Grafana plugin to download
 
- `[grafana_plugins: <entry>:] name:` <string> (**default**: `latest)
+ `[grafana_plugins: <entry>:] version:` <string> (**default**: `latest)
 - version of the Grafana plugin to download
   
  ##### Example
@@ -596,7 +599,7 @@ This role supports launching the `grafana` web server accomplished utilizing the
 
 _The following variables can be customized to manage the service's **systemd** [Service] unit definition and execution profile/policy:_
 
-`extra_run_args: <prometheus-cli-options>` (**default**: `[]`)
+`extra_run_args: <grafana-cli-options>` (**default**: `[]`)
 - list of `grafana` commandline arguments to pass to the binary at runtime for customizing launch.
 
 Supporting full expression of `grafana`'s [cli](https://gist.github.com/0x0I/d4d6c828a4f456f778f64b104b6af3bf), this variable enables the launch to be customized according to the user's specification.
@@ -606,7 +609,7 @@ Supporting full expression of `grafana`'s [cli](https://gist.github.com/0x0I/d4d
 
 #### Uninstall
 
-Support for uninstalling and removing artifacts necessary for provisioning allows for users/operators to return a target host to its configured state prior to application of this role. This can be useful for recycling nodes and roles and perhaps providing more graceful/managed transitions between tooling upgrades.
+Support for uninstalling and removing artifacts necessary for provisioning allows for users/operators to return a target host to its configured state prior to application of this role. This can be useful for recycling nodes and perhaps providing more graceful/managed transitions between tooling upgrades.
 
 _The following variable(s) can be customized to manage this uninstall process:_
 
@@ -633,8 +636,8 @@ install specific version of Grafana bits:
   roles:
   - role: 0xOI.grafana
     vars:
-      archive_url: https://github.com/prometheus/prometheus/releases/download/v2.15.0/prometheus-2.15.0.linux-amd64.tar.gz
-      archive_checksum: 1c2175428e7a70297d97a30a04278b86ccd6fc53bf481344936d6573482203b4
+      archive_url: https://dl.grafana.com/oss/release/grafana-6.6.1.linux-amd64.tar.gz
+      archive_checksum: 0edc8207e356ef66eb7b1c78a1cdabc2cd5c0655de774000de2ad0397e543377
 ```
 
 adust Grafana installation, configuration and data directories:
