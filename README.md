@@ -106,8 +106,6 @@ These sections and settings can expressed within the hash, `grafana_config`, key
 `[grafana_config:] path: <key: value,...>` (**default**: see [section](https://grafana.com/docs/grafana/latest/installation/configuration/#paths) documentation)
 - specifies parameters that are related to where Grafana stores artifacts and variable data
 
-##### Example
-
  ```yaml
   grafana_config:
     # section [paths]
@@ -118,12 +116,8 @@ These sections and settings can expressed within the hash, `grafana_config`, key
       logs: /mnt/logs/grafana
   ```
 
-##### :server
-
 `[grafana_config:] server: <key: value,...>` (**default**: see [section](https://grafana.com/docs/grafana/latest/installation/configuration/#server) documentation)
 - specifies parameters that are related to how Grafana interfaces over the network
-
-##### Example
 
  ```yaml
   grafana_config:
@@ -138,7 +132,6 @@ These sections and settings can expressed within the hash, `grafana_config`, key
 `[grafana_config:] database: <key: value,...>` (**default**: see [section](https://grafana.com/docs/grafana/latest/installation/configuration/#database) documentation)
 - specifies parameters that control how grafana interfaces with one of the available backend datastore types (i.e. *mysql, postgres and sqlite*)
 
-##### Example
 
  ```yaml
   grafana_config:
@@ -156,8 +149,6 @@ These sections and settings can expressed within the hash, `grafana_config`, key
 `[grafana_config:] remote_cache: <key: value,...>` (**default**: see [section](https://grafana.com/docs/grafana/latest/installation/configuration/#remote-cache) documentation)
 - specifies parameters that control how grafana interfaces with one of the available remote-caching types (i.e. *redis, memcached and database*)
 
-##### Example
-
  ```yaml
   grafana_config:
     # section [remote_cache]
@@ -170,8 +161,6 @@ These sections and settings can expressed within the hash, `grafana_config`, key
 
 `[grafana_config:] security: <key: value,...>` (**default**: see [section](https://grafana.com/docs/grafana/latest/installation/configuration/#security) documentation)
 - specifies parameters that manage Grafana user/organization authentication and authorization behavior
-
-##### Example
 
 ```yaml
   grafana_config:
@@ -186,8 +175,6 @@ These sections and settings can expressed within the hash, `grafana_config`, key
 
 `[grafana_config:] users: <key: value,...>` (**default**: see [section](https://grafana.com/docs/grafana/latest/installation/configuration/#users) documentation)
 - specifies parameters that control Grafana user capabilities
-
-##### Example
 
 ```yaml
   grafana_config:
@@ -204,8 +191,6 @@ These sections and settings can expressed within the hash, `grafana_config`, key
 - specifies parameters that regulate user authorization capabilites
 
 Grafana provides multiple methods to authenticate users and settings for each method are expressed within [auth.<method>] sections as appropriate, allowing for authentication ranging from basic user auth to Google & Github OAuth.
-
-##### Example
 
 ```yaml
   grafana_config:
@@ -226,8 +211,6 @@ Grafana provides multiple methods to authenticate users and settings for each me
 `[grafana_config:] dataproxy: <key: value,...>` (**default**: see [section](https://grafana.com/docs/grafana/latest/installation/configuration/#dataproxy) documentation)
 - specifies parameters that enable data proxy logging
 
-##### Example
-
 ```yaml
   grafana_config:
     # section [dataproxy]
@@ -241,8 +224,6 @@ Grafana provides multiple methods to authenticate users and settings for each me
 
 `[grafana_config:] analytics: <key: value,...>` (**default**: see [section](https://grafana.com/docs/grafana/latest/installation/configuration/#analytics) documentation)
 - specifies parameters that activate usage statistics collection and reporting
-
-##### Example
 
 ```yaml
   grafana_config:
@@ -258,8 +239,6 @@ Grafana provides multiple methods to authenticate users and settings for each me
 `[grafana_config:] dashboards: <key: value,...>` (**default**: see [section](https://grafana.com/docs/grafana/latest/installation/configuration/#dashboards) documentation)
 - specifies parameters that regulate Grafana's dashboard maintenance policy
 
-##### Example
-
 ```yaml
   grafana_config:
     # section [dashboards]
@@ -271,8 +250,6 @@ Grafana provides multiple methods to authenticate users and settings for each me
 
 `[grafana_config:] smtp: <key: value,...>` (**default**: see [section](https://grafana.com/docs/grafana/latest/installation/configuration/#smtp) documentation)
 - specifies email server settings for identity in addition to alerting/notification
-
-##### Example
 
 ```yaml
   grafana_config:
@@ -289,8 +266,6 @@ Grafana provides multiple methods to authenticate users and settings for each me
 `[grafana_config:] log: <key: value,...>` (**default**: see [section](https://grafana.com/docs/grafana/latest/installation/configuration/#log) documentation)
 - specifies logging settings (e.g. log level and log output modes or channels)
 
-##### Example
-
 ```yaml
   grafana_config:
     # section [log]
@@ -303,8 +278,6 @@ Grafana provides multiple methods to authenticate users and settings for each me
 
 `[grafana_config:] metrics: <key: value,...>` (**default**: see [section](https://grafana.com/docs/grafana/latest/installation/configuration/#metrics) documentation)
 - specifies settings for managing the emission of Grafana telemetry
-
-##### Example
 
 ```yaml
   grafana_config:
@@ -321,8 +294,6 @@ Grafana provides multiple methods to authenticate users and settings for each me
 `[grafana_config:] snapshots: <key: value,...>` (**default**: see [section](https://grafana.com/docs/grafana/latest/installation/configuration/#snapshots) documentation)
 - specifies settings for managing the publishing behavior of Grafana's interactive dashboard snapshotting functionality
 
-##### Example
-
 ```yaml
   grafana_config:
     # section [snapshots]
@@ -337,8 +308,6 @@ Grafana provides multiple methods to authenticate users and settings for each me
 - specifies settings for controlling how images should be made publicly available for sharing on services like slack
 
 Grafana supports several backend storage providers for which individual configurations can be expressed within [external_image_storage.<provider>] sections as appropriate, enabling remote storage on services like `s3, gcs, azure blob and local storage`.
-
-##### Example
 
 ```yaml
   grafana_config:
@@ -360,8 +329,6 @@ Grafana supports several backend storage providers for which individual configur
 `[grafana_config:] alerting: <key: value,...>` (**default**: see [section](https://grafana.com/docs/grafana/latest/installation/configuration/#alerting) documentation)
 - specifies settings for managing Grafana's alerting engine and behavior/rulesets
 
-##### Example
-
 ```yaml
   grafana_config:
     # section [alerting]
@@ -379,8 +346,6 @@ Grafana supports several backend storage providers for which individual configur
 `[grafana_config:] rendering: <key: value,...>` (**default**: see [section](https://grafana.com/docs/grafana/latest/installation/configuration/#rendering) documentation)
 - specifies settings for operating a remote HTTP rendering service
 
-##### Example
-
 ```yaml
   grafana_config:
     # section [rendering]
@@ -394,8 +359,6 @@ Grafana supports several backend storage providers for which individual configur
 `[grafana_config:] plugins: <key: value,...>` (**default**: see [section](https://grafana.com/docs/grafana/latest/installation/configuration/#plugins-1) documentation)
 - specifies settings for managing the availability and accessibility of grafana plugins
 
-##### Example
-
 ```yaml
   grafana_config:
     # section [plugins]
@@ -407,8 +370,6 @@ Grafana supports several backend storage providers for which individual configur
 
 `[grafana_config:] feature_toggles: <key: value,...>` (**default**: see [section](https://grafana.com/docs/grafana/latest/installation/configuration/#feature-toggles) documentation)
 - specifies settings for toggling the use of alpha features by the grafana instance, delimited by spaces
-
-##### Example
 
 ```yaml
   grafana_config:
@@ -423,8 +384,6 @@ Grafana supports several backend storage providers for which individual configur
 - specifies settings for configuring Grafana's Jaegar client for distributed tracing.
 
 **Note:** standard Jaegar environment variables, prefixed by `JAEGAR_*`, can still be specified and will override any settings provided herein.
-
-##### Example
 
 ```yaml
   grafana_config:
@@ -451,8 +410,6 @@ These datasoure configurations can expressed within the hash, `grafana_datasourc
 
 `grafana_datasources: <entry> : deleteDatasources: <list-of-dicts>` (**default**: `[]`)
 - list of previously imported data source definitions to delete (based on supported list mentioned above) to render within the configuration file
-
-##### Example
 
  ```yaml
   grafana_datasources:
@@ -481,8 +438,6 @@ These datasoure configurations can expressed within the hash, `grafana_datasourc
         jsonData:
           graphiteVersion: "1.1"
   ```
-
-#### Dashboards
 
 Since version *5.0* Grafana has allowed adding one or more `yaml|json` config files in the provisioning/dashboards directory. Enabling Grafana to load dashboards from the local filesystem, this directory can contain a list of dashboards providers which indicate characteristics and various forms of meta data pertaining to the directory/file from which to load.
 
@@ -513,8 +468,6 @@ These dashboard provider configurations can be expressed within the hash, `grafa
 - location on host filesystem to store JSON dashboard definition
 
 **Note:** either one of `_.src` or `_.id` for dashboard identification and location is *required*.
-
-##### Example
 
 ```yaml
   grafana_dashboards:
@@ -558,8 +511,6 @@ Provisioning looks up alert notifications by uid, and will update any existing n
 `grafana_notifiers: <entry> : delete_notifiers: <list-of-dicts>` (**default**: `[]`)
 - list of grafana alert notifiers to delete from a grafana instance
 
-##### Example
-
 ```yaml
   grafana_notifiers:
     - name: slack-example
@@ -583,8 +534,6 @@ Provisioning looks up alert notifications by uid, and will update any existing n
 
  `[grafana_plugins: <entry>:] version:` <string> (**default**: `latest)
 - version of the Grafana plugin to download
-  
- ##### Example
 
 ```yaml
   grafana_plugins:
