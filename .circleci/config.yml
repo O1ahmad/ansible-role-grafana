@@ -20,3 +20,6 @@ jobs:
       - run:
           name: List available functional tests
           command: kitchen list
+      - run:
+          name: Run desired functional tests
+          command: kitchen test uninstall-ubuntu-1804
