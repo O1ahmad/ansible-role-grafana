@@ -4,7 +4,7 @@
   file:
     path: "{{ config_dir }}"
     owner: "{{ grafana_user }}"
-    group: "{{ grafana_user }}"
+    group: "{{ grafana_group }}"
     state: directory
   tags:
     - config
@@ -14,7 +14,7 @@
   file:
     path: "{{ _logs_dir }}"
     owner: "{{ grafana_user }}"
-    group: "{{ grafana_user }}"
+    group: "{{ grafana_group }}"
     state: directory
   tags:
     - config
@@ -25,7 +25,7 @@
   file:
     path: "{{ _data_dir }}"
     owner: "{{ grafana_user }}"
-    group: "{{ grafana_user }}"
+    group: "{{ grafana_group }}"
     state: directory
   tags:
     - config
@@ -36,7 +36,7 @@
   file:
     path: "{{ _provisioning_dir }}"
     owner: "{{ grafana_user }}"
-    group: "{{ grafana_user }}"
+    group: "{{ grafana_group }}"
     state: directory
   tags:
     - config
@@ -47,7 +47,7 @@
   file:
     path: "{{ _plugins_dir }}"
     owner: "{{ grafana_user }}"
-    group: "{{ grafana_user }}"
+    group: "{{ grafana_group }}"
     state: directory
   tags:
     - config

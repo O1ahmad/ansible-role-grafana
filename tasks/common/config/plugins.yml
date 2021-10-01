@@ -4,7 +4,7 @@
   file:
     path: "{{ _plugins_dir }}"
     owner: "{{ grafana_user }}"
-    group: "{{ grafana_user }}"
+    group: "{{ grafana_group }}"
     state: directory
 
 - name: Install/update grafana plugins
@@ -26,7 +26,7 @@
   file:
     path: "{{ _plugins_dir }}"
     owner: "{{ grafana_user }}"
-    group: "{{ grafana_user }}"
+    group: "{{ grafana_group }}"
     state: directory
     mode: 0755
     recurse: true

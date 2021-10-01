@@ -4,7 +4,7 @@
   file:
     path: "{{ _provisioning_dir }}/notifiers"
     owner: "{{ grafana_user }}"
-    group: "{{ grafana_user }}"
+    group: "{{ grafana_group }}"
     state: directory
 
 - name: Render Grafana provisioned notifiers configuration
@@ -14,7 +14,7 @@
     src: notifiers.j2
     dest: "{{ _provisioning_dir }}/notifiers/{{ item.name }}.yml"
     owner: "{{ grafana_user }}"
-    group: "{{ grafana_user }}"
+    group: "{{ grafana_group }}"
     mode: 0644
   vars:
     notifiers: "{{ item.notifiers | default([]) }}"
