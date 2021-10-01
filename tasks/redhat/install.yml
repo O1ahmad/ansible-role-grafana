@@ -7,7 +7,7 @@
     dest: "/tmp/{{ package_url | urlsplit('path') | basename }}"
     checksum: "{{ checksum_format }}:{{ package_checksum }}"
     owner: "{{ grafana_user }}"
-    group: "{{ grafana_user }}"
+    group: "{{ grafana_group }}"
     mode: '0775'
   register: package_tmp
   tags:

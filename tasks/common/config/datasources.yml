@@ -4,7 +4,7 @@
   file:
     path: "{{ _provisioning_dir }}/datasources"
     owner: "{{ grafana_user }}"
-    group: "{{ grafana_user }}"
+    group: "{{ grafana_group }}"
     state: directory
 
 - name: Render Grafana datasources configuration
@@ -14,7 +14,7 @@
     src: datasources.j2
     dest: "{{ _provisioning_dir }}/datasources/{{ item.name }}.yml"
     owner: "{{ grafana_user }}"
-    group: "{{ grafana_user }}"
+    group: "{{ grafana_group }}"
     mode: 0644
   vars:
     version: "{{ item.version | default(1) }}"

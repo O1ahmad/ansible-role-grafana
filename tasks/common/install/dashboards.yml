@@ -6,7 +6,7 @@
     url: "{{ download.src if download.src is defined else _dashboard_base_url + '/' + download.id }}"
     dest: "{{ download.dest | default(_provisioning_dir) }}/dashboards/{{ download.name }}.json"
     owner: "{{ grafana_user }}"
-    group: "{{ grafana_user }}"
+    group: "{{ grafana_group }}"
     mode: 0644
   loop: "{{ provider.urls }}"
   loop_control:

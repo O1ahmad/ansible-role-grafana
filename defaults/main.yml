@@ -1,5 +1,6 @@
 ---
 grafana_user: grafana
+grafana_group: grafana
 
 install_type: archive
 

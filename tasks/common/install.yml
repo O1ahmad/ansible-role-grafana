@@ -2,7 +2,7 @@
 - name: Ensure Grafana system group exists
   become: true
   group:
-    name: "{{ grafana_user }}"
+    name: "{{ grafana_group }}"
     state: present
     system: true
   tags:
@@ -13,7 +13,7 @@
   user:
     comment: Grafana service account
     name: "{{ grafana_user }}"
-    group: "{{ grafana_user }}"
+    group: "{{ grafana_group }}"
     shell: "/sbin/nologin"
     system: true
     create_home: false
@@ -27,7 +27,7 @@
     path: "{{ install_dir }}"
     state: directory
     owner: "{{ grafana_user }}"
-    group: "{{ grafana_user }}"
+    group: "{{ grafana_group }}"
   tags:
     - install
 
@@ -39,7 +39,7 @@
     dest: "/tmp/{{ archive_url | urlsplit('path') | basename }}"
     checksum: "{{ (archive_checksum|length > 0) | ternary(checksum_format+':'+archive_checksum, '') }}"
     owner: "{{ grafana_user }}"
-    group: "{{ grafana_user }}"
+    group: "{{ grafana_group }}"
     mode: '0775'
   register: archive_tmp
   tags:
@@ -52,7 +52,7 @@
     src: "{{ archive_tmp.dest }}"
     dest: "{{ install_dir }}"
     owner: "{{ grafana_user }}"
-    group: "{{ grafana_user }}"
+    group: "{{ grafana_group }}"
     mode: '0775'
     remote_src: true
     extra_opts:

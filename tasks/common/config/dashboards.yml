@@ -4,7 +4,7 @@
   file:
     path: "{{ _provisioning_dir }}/dashboards"
     owner: "{{ grafana_user }}"
-    group: "{{ grafana_user }}"
+    group: "{{ grafana_group }}"
     state: directory
 
 - name: Render Grafana dashboard configuration
@@ -14,7 +14,7 @@
     src: dashboards.j2
     dest: "{{ _provisioning_dir }}/dashboards/{{ item.name }}.yml"
     owner: "{{ grafana_user }}"
-    group: "{{ grafana_user }}"
+    group: "{{ grafana_group }}"
     mode: 0644
   vars:
     version: "{{ item.version | default(1) }}"
