@@ -71,7 +71,7 @@
     default_service_unit:
       ExecStart: "{{ install_dir }}/bin/grafana-server {{ config_spec }} {{ extra_run_args|join(' ') }}"
       User: "{{ grafana_user }}"
-      group: "{{ grafana_group }}"
+      Group: "{{ grafana_group }}"
       WorkingDirectory: "{{ install_dir }}"
       StandardOutput: journal
       StandardError: inherit
