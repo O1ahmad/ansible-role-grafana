@@ -51,6 +51,7 @@ Variables are available and organized according to the following software & mach
 _The following variables can be customized to control various aspects of this installation process, ranging from software version and source location of binaries to the installation directory where they are stored:_
 
 `grafana_user: <service-user-name>` (**default**: *grafana*)
+
 `grafana_group: <service-group-name>` (**default**: *grafana*)
 - dedicated service user and group used by `grafana` for privilege separation (see [here](https://www.beyondtrust.com/blog/entry/how-separation-privilege-improves-security) for details)
 
