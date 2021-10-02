@@ -77,6 +77,6 @@
 - name: Remove Grafana group
   become: true
   group:
-    name: "{{ grafana_user }}"
+    name: "{{ grafana_group }}"
     state: absent
   listen: Uninstall service
