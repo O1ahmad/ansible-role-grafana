@@ -24,10 +24,9 @@ provisioner:
   hosts: test-kitchen
   name: ansible_playbook
   require_pip: true
-  ansible_version: 2.9.4
+  ansible_version: 2.9.9
   ansible_verbose: true
   ansible_cfg_path: test/ansible.cfg
-  requirements_path: test/requirements-test.yml
   idempotency_test: true
   require_chef_for_busser: false
   require_ruby_for_busser: false
@@ -67,7 +66,7 @@ platforms:
       provision_command:
         - sed -i 's/UsePAM yes/UsePAM no/g' /etc/ssh/sshd_config
         - systemctl enable ssh.service
-  - name: ubuntu-19.04
+  - name: ubuntu-20.04
     driver_config:
       <<: *default_driver_config
       provision_command:
